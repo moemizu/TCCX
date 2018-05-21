@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// TODO: new authentication pages
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
