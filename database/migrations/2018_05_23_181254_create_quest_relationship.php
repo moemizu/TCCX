@@ -18,7 +18,7 @@ class CreateQuestRelationship extends Migration
             // Allow some quest to have no fixed location or zone
             $table->unsignedInteger('quest_location_id')->nullable()->after('name');
             $table->unsignedInteger('quest_zone_id')->nullable()->after('name');
-            $table->unsignedInteger('quest_type_id')->after('name');
+            $table->unsignedInteger('quest_type_id')->nullable()->after('name');
             $table->foreign('quest_location_id')
                 ->references('id')->on('quest_locations')
                 ->onDelete('set null')
