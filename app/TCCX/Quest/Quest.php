@@ -2,6 +2,7 @@
 
 namespace App\TCCX\Quest;
 
+use App\TCCX\Team;
 use Illuminate\Database\Eloquent\Model;
 
 class Quest extends Model
@@ -19,5 +20,12 @@ class Quest extends Model
     public function questLocation()
     {
         return $this->belongsTo(QuestLocation::class, 'quest_location_id');
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class)
+            ->withPivot('assigned_at', 'completed_at', 'note')
+            ->withTimestamps();
     }
 }
