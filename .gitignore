@@ -12,3 +12,7 @@ npm-debug.log
 yarn-error.log
 .env
 _ide_helper.php
+/public/css/*
+/public/js/*
+/public/build
+/public/mix-manifest.json
