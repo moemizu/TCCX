@@ -19,3 +19,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/scoreboard', 'TCCX\ScoreboardController@index')->name('tccx.scoreboard');
