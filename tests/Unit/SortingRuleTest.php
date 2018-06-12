@@ -30,8 +30,7 @@ class SortingRuleTest extends TestCase
             [':desc', ['score', 'desc']],
             [':asc', ['score', 'asc']],
             ['name:', ['name', 'asc']],
-            ['', ['score', 'asc']],
-            [null, ['score', 'asc']],
+            ['', ['score', 'asc']]
         ];
     }
 }
