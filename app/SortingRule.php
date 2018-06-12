@@ -5,6 +5,7 @@ namespace App;
 /**
  * Class SortingRule
  * Use for validating and parsing sorting rule
+ * TODO: More validation
  * @package App
  */
 class SortingRule
@@ -16,13 +17,24 @@ class SortingRule
     /** @var string $defaultKey default key */
     private $defaultKey;
 
+    /**
+     * SortingRule constructor.
+     * @param array $keys All possible key for sorting
+     * @param string $defaultKey default key, if user supplied input is invalid
+     */
     public function __construct($keys, $defaultKey)
     {
         $this->availableKeys = $keys;
         $this->defaultKey = $defaultKey;
     }
 
-    public function keyOrDefault($inputKey)
+    /**
+     * Return pair of key and direction from user input
+     * return default value with ascending direction if input is invalid
+     * @param string $inputKey user input
+     * @return array ['key', 'direction'] direction is either 'asc' or 'desc'
+     */
+    public function keyOrDefault(string $inputKey): array
     {
         // default value
         $key = $this->defaultKey;
