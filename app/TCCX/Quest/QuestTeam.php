@@ -6,6 +6,25 @@ use App\TCCX\Member;
 use App\TCCX\Team;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\TCCX\Quest\QuestTeam
+ *
+ * @property int $id
+ * @property int $team_id
+ * @property int $quest_keeper_id
+ * @property string $location_url
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\TCCX\Member $questKeeper
+ * @property-read \App\TCCX\Team $team
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTeam whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTeam whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTeam whereLocationUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTeam whereQuestKeeperId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTeam whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTeam whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class QuestTeam extends Model
 {
     /**

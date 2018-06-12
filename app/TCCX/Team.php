@@ -5,6 +5,27 @@ namespace App\TCCX;
 use App\TCCX\Quest\Quest;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\TCCX\Team
+ *
+ * @property int $id
+ * @property int $order
+ * @property string $name
+ * @property int $score
+ * @property string $info
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\TCCX\Member[] $members
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\TCCX\Quest\Quest[] $quests
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereInfo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereScore($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Team extends Model
 {
     public function members()
