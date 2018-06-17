@@ -1,10 +1,17 @@
-
+@import "~bootstrap/scss/bootstrap";
 // Body
 $body-bg: #f5f8fa;
 //noinspection CssUnknownTarget
 $body-bg-url: url('/storage/images/background.jpg');
 
 // Typography
-$font-family-sans-serif: "Raleway", sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
+// $font-family-sans-serif: "Raleway", sans-serif;
+//$font-size-base: 0.9rem;
+//$line-height-base: 1.6;
+
+// Additional sizing utils
+@for $i from 1 through 20 {
+  @if (($i*5)%25 != 0) {
+    $sizes: map_merge($sizes, ($i*5: $i*5%));
+  }
+}
