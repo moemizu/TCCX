@@ -20,3 +20,13 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app'
 });
+
+// Font awesome
+import fontawesome from '@fortawesome/fontawesome';
+import faFreeSolid from '@fortawesome/fontawesome-free-solid';
+import faFreeRegular from '@fortawesome/fontawesome-free-regular';
+import faFreeBrands from '@fortawesome/fontawesome-free-brands';
+
+// import content
+fontawesome.library.add(faFreeSolid, faFreeRegular, faFreeBrands);
+fontawesome.dom.i2svg();
