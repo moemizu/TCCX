@@ -43,20 +43,23 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereStory($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\TCCX\Quest\QuestLocation|null $quest_location
+ * @property-read \App\TCCX\Quest\QuestType|null $quest_type
+ * @property-read \App\TCCX\Quest\QuestZone|null $quest_zone
  */
 class Quest extends Model
 {
-    public function questType()
+    public function quest_type()
     {
         return $this->belongsTo(QuestType::class, 'quest_type_id');
     }
 
-    public function questZone()
+    public function quest_zone()
     {
         return $this->belongsTo(QuestZone::class, 'quest_zone_id');
     }
 
-    public function questLocation()
+    public function quest_location()
     {
         return $this->belongsTo(QuestLocation::class, 'quest_location_id');
     }

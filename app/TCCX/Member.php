@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Member whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Member whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\TCCX\MemberGroup|null $member_group
  */
 class Member extends Model
 {
@@ -34,7 +35,7 @@ class Member extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function memberGroup()
+    public function member_group()
     {
         return $this->belongsTo(MemberGroup::class, 'member_group_id');
     }

@@ -24,13 +24,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTeam whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTeam whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\TCCX\Member $quest_keeper
  */
 class QuestTeam extends Model
 {
     /**
      * Get member who is a quest keeper for this team
      */
-    public function questKeeper()
+    public function quest_keeper()
     {
         return $this->belongsTo(Member::class, 'quest_keeper_id');
     }
