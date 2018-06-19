@@ -14,7 +14,7 @@ class ScoreboardController extends Controller
     public function __construct()
     {
         $this->scoreboardSorting = new SortingRule(
-            ['id', 'order', 'name', 'score'], 'score'
+            ['id', 'order', 'name', 'score'], 'score', 'desc'
         );
     }
 
