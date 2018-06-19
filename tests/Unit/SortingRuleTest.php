@@ -33,4 +33,14 @@ class SortingRuleTest extends TestCase
             ['', ['score', 'asc']]
         ];
     }
+
+    /**
+     * Test if it return correct default direction
+     * @return void
+     */
+    public function testRuleDirection()
+    {
+        $rule = new SortingRule(['name', 'id', 'order', 'score'], 'score', 'desc');
+        $this->assertSame($rule->keyOrDefault(''), ['score', 'desc']);
+    }
 }

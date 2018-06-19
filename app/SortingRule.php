@@ -17,15 +17,20 @@ class SortingRule
     /** @var string $defaultKey default key */
     private $defaultKey;
 
+    /** @var string $defaultDirection default direction */
+    private $defaultDirection;
+
     /**
      * SortingRule constructor.
      * @param array $keys All possible key for sorting
      * @param string $defaultKey default key, if user supplied input is invalid
+     * @param string $defaultDirection default direction
      */
-    public function __construct($keys, $defaultKey)
+    public function __construct($keys, $defaultKey, $defaultDirection = self::DIRECTIONS[0])
     {
         $this->availableKeys = $keys;
         $this->defaultKey = $defaultKey;
+        $this->defaultDirection = $defaultDirection;
     }
 
     /**
@@ -38,7 +43,7 @@ class SortingRule
     {
         // default value
         $key = $this->defaultKey;
-        $direction = self::DIRECTIONS[0];
+        $direction = $this->defaultDirection;
         // clear case
         $inputKey = strtolower($inputKey);
         // split input
