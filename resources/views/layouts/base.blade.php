@@ -18,6 +18,8 @@
     @stack('styles')
 </head>
 <body>
+<!-- Background -->
+<div class="background-fixed"></div>
 <!-- Main -->
 <div id="app">
     @yield('content')

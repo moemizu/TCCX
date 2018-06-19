@@ -14,5 +14,16 @@
 }
 
 body {
+  // background-image: $body-bg-url;
+}
+
+// Fixed background
+.background-fixed {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1000;
+  left: 0;
+  top: 0;
   background-image: $body-bg-url;
 }
