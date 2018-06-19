@@ -20,10 +20,18 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Scoreboard
 Route::get('/scoreboard', 'TCCX\ScoreboardController@index')->name('tccx.scoreboard');
+Route::post('/scoreboard/change', 'TCCX\ScoreboardController@changeScore');
 
 // Quest system
-//Route::get('/quest/quests','')->name('tccx.quests');
+
+// Quest list
+Route::redirect('/quest', '/quest/quests');
+Route::get('/quest/quests', 'TCCX\QuestController@index')->name('tccx.quest.quests');
+// Create a new quest
+Route::get('/quest/create', 'TCCX\QuestController@createQuest')->name('tccx.quest.create');
+Route::post('/quest/create', 'TCCX\QuestController@createQuest');
 
 //Route::get('/quest/locations','')->name('tccx.quests.locations');
 
