@@ -30,3 +30,8 @@ import faFreeBrands from '@fortawesome/fontawesome-free-brands';
 // import content
 fontawesome.library.add(faFreeSolid, faFreeRegular, faFreeBrands);
 fontawesome.dom.i2svg();
+
+// library
+import {scrollToElement} from './page-util';
+
+window.scrollToElement = scrollToElement;

@@ -28,4 +28,20 @@ class SubmitScore extends FormRequest
             'team' => 'required|integer'
         ];
     }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            /** @var \Illuminate\Validation\Validator $validator */
+            if ($validator->invalid()) {
+                $this->session()->flash('scroll-to', 'form-score-change');
+            }
+        });
+    }
 }

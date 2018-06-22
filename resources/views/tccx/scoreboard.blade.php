@@ -43,20 +43,37 @@
                     <h5 class="card-header"><i class="fas fa-wrench"></i> Manage Score</h5>
                     <div class="card-body">
                         <h6><i class="fas fa-plus"></i> Increase/Decrease</h6>
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li style="font-size: 0.9em">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
                         <form id="form-score-change" action="scoreboard/change" method="post">
                             {{csrf_field()}}
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Team</label>
                                 <select id="input-team" name="team" class="custom-select form-control-sm">
                                     @foreach($teams->sortBy('score') as $team)
-                                        <option value="{{$team->id}}">{{$team->name}} ({{$team->score}})</option>
+                                        <option @if(old('team',-1) == $team->id)
+                                                selected
+                                                @endif
+                                                value="{{$team->id}}">{{$team->name}} ({{$team->score}})
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="input-score">Amount</label>
                                 <input type="number" class="form-control form-control-sm" name="score" id="input-score"
-                                       placeholder="Score">
+                                       placeholder="Score" value="{{old('score')}}">
                                 <small id="scoreHelp" class="form-text text-muted">Enter negative value to decrease
                                     score
                                 </small>
@@ -70,3 +87,11 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @if (session()->has('scroll-to'))
+        <script>
+            setTimeout(window.scrollToElement('{{session("scroll-to",'')}}'), 100);
+        </script>
+    @endif
+@endpush
