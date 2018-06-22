@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\TCCX;
 
 use App\TCCX\Quest\Quest;
+use App\TCCX\Quest\QuestLocation;
+use App\TCCX\Quest\QuestType;
+use App\TCCX\Quest\QuestZone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -31,8 +34,12 @@ class QuestController extends Controller
     {
         // get
         if ($request->isMethod(Request::METHOD_GET)) {
+            // load type and zone
+            $types = QuestType::all();
+            $zones = QuestZone::all();
+            $locations = QuestLocation::orderBy('name')->get();
             // return quest creation page
-            return view('tccx.quest.create');
+            return view('tccx.quest.create', ['types' => $types, 'zones' => $zones, 'locations' => $locations]);
         } // post
         else if ($request->isMethod(Request::METHOD_POST)) {
             // validate input
