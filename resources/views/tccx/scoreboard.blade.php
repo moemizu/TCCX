@@ -16,8 +16,10 @@
                             <thead class="w-100">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Team Name</th>
-                                <th scope="col">Score</th>
+                                <th class="sorting" scope="col">Team Name <span class="float-right"><i
+                                                class="fas fa-sort"></i></span></th>
+                                <th class="sorting" scope="col">Score <span class="float-right"><i
+                                                class="fas fa-sort"></i></span></th>
                                 <th scope="col">Last Action</th>
                             </tr>
                             </thead>
