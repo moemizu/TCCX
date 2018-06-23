@@ -10,6 +10,18 @@
                 <div id="create-quest" class="card m-2 mb-4">
                     <h5 class="card-header"><i class="fas fa-edit"></i> Create a New Quest</h5>
                     <div class="card-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li style="font-size: 0.9em">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <form id="form-add-quest" method="post" action="/quest/create">
                             {{csrf_field()}}
                             <h5><i class="fas fa-pencil-alt"></i> General</h5>
@@ -111,14 +123,15 @@
                                 <textarea class="form-control" id="input-how-to" name="how-to" rows="3"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="input-story">Criteria <span
+                                <label for="input-criteria">Criteria <span
                                             class="text-warning">(Only staff can see this)</span></label>
                                 <textarea class="form-control" id="input-criteria" name="criteria" rows="5"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="input-story">Editorial <span
+                                <label for="input-editorial">Editorial <span
                                             class="text-warning">(Only staff can see this)</span></label>
-                                <textarea class="form-control" id="input-criteria" name="criteria" rows="5"></textarea>
+                                <textarea class="form-control" id="input-editorial" name="editorial"
+                                          rows="5"></textarea>
                             </div>
                             <!-- Submit  -->
                             <button type="submit" class="btn btn-primary">Create</button>

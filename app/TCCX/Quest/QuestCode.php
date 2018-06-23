@@ -15,7 +15,7 @@ class QuestCode
     {
         $type = optional($quest->quest_type)->code ?? '';
         $zone = optional($quest->quest_zone)->code ?? '';
-        $number = sprintf('%02d', $quest->id);
+        $number = sprintf('%02d', $quest->order);
         return strtoupper($type . $zone . $number);
     }
 }

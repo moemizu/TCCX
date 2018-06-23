@@ -37,7 +37,7 @@
                                     <td>{{$qc->generate($quest)}}</td>
                                     <td>{{ucfirst($quest->difficulty)}}</td>
                                     <td>{{$quest->quest_location->name}}</td>
-                                    <td>{{str_limit($quest->how_to,50)}}</td>
+                                    <td>{{str_limit(strip_tags($quest->how_to),50)}}</td>
                                     <td>{{$quest->reward}}</td>
                                     <td class="text-muted">None</td>
                                     <td>&#x22EF</td>

@@ -31,7 +31,7 @@ Route::redirect('/quest', '/quest/quests');
 Route::get('/quest/quests', 'TCCX\QuestController@index')->name('tccx.quest.quests');
 // Create a new quest
 Route::get('/quest/create', 'TCCX\QuestController@createQuest')->name('tccx.quest.create');
-Route::post('/quest/create', 'TCCX\QuestController@createQuest');
+Route::post('/quest/create', 'TCCX\QuestController@createQuestPost');
 
 //Route::get('/quest/locations','')->name('tccx.quests.locations');
 
