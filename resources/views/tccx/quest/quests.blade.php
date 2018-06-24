@@ -30,6 +30,7 @@
                             <tbody>
                             <?php /**@var App\TCCX\Quest\Quest $quest */?>
                             @inject('qc','App\TCCX\Quest\QuestCode')
+                            @inject('pd','Parsedown')
                             @foreach($quests as $quest)
                                 <tr>
                                     <th scope="row">{{$quest->id}}</th>
@@ -37,7 +38,7 @@
                                     <td>{{$qc->generate($quest)}}</td>
                                     <td>{{ucfirst($quest->difficulty)}}</td>
                                     <td>{{$quest->quest_location->name}}</td>
-                                    <td>{{str_limit(strip_tags($quest->how_to),50)}}</td>
+                                    <td>{{str_limit(strip_tags($pd->parse($quest->how_to)),50)}}</td>
                                     <td>{{$quest->reward}}</td>
                                     <td class="text-muted">None</td>
                                     <td>&#x22EF</td>

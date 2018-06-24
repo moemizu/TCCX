@@ -26,7 +26,7 @@ class StoreQuest extends FormRequest
     public function rules()
     {
         $geoCordRegex = 'regex:(\-?\d+(\.\d+)?)';
-        $requiredLocation = 'required_without:location-id';
+        $requiredLocation = 'nullable'; // HACK: Workaround for required_without
         $locIdValidator = function ($attr, $value, $fail) {
             if (!empty($value) && !QuestLocation::whereId($value)->exists()) {
                 return $fail($attr . ' is invalid.');
