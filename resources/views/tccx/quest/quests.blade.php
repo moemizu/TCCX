@@ -24,7 +24,7 @@
                                 <th scope="col">Instruction</th>
                                 <th scope="col">Reward</th>
                                 <th class="text-nowrap" scope="col">Assign to</th>
-                                <th scope="col"></th>
+                                <th scope="col">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -41,7 +41,7 @@
                                     <td>{{str_limit(strip_tags($pd->parse($quest->how_to)),50)}}</td>
                                     <td>{{$quest->reward}}</td>
                                     <td class="text-muted">None</td>
-                                    <td style="width: 170px;">
+                                    <td class="text-nowrap">
                                         <a href="/quest/edit?id={{$quest->id}}&last_page={{request('page',1)}}"
                                            class="btn btn-sm btn-primary" role="button" aria-disabled="true"><i
                                                     class="fas fa-edit"></i> Edit</a>
