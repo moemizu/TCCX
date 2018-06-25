@@ -34,7 +34,8 @@
                             @foreach($quests as $quest)
                                 <tr>
                                     <th scope="row">{{$quest->id}}</th>
-                                    <td>{{$quest->name}}</td>
+                                    <td><a href="/quest/view/{{$qc->generate($quest)}}"
+                                           target="_blank">{{$quest->name}}</a></td>
                                     <td>{{$qc->generate($quest)}}</td>
                                     <td>{{ucfirst($quest->difficulty)}}</td>
                                     <td>{{$quest->quest_location->name}}</td>

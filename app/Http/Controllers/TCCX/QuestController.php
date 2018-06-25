@@ -7,6 +7,7 @@ use App\TCCX\Quest\Quest;
 use App\TCCX\Quest\QuestLocation;
 use App\TCCX\Quest\QuestType;
 use App\TCCX\Quest\QuestZone;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -70,11 +71,31 @@ class QuestController extends Controller
 
     /**
      * Get details of a quest
-     * @param Request $request
+     * intended for printing
+     * @param string $code quest code
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getQuest(Request $request)
+    public function getQuest($code)
     {
+        $qc = resolve('App\TCCX\Quest\QuestCode');
+        $parsedQuestCode = $qc->parse($code);
+        $quest = Quest::where('order', $parsedQuestCode['order'])
+            ->where('quest_type_id', $parsedQuestCode['type']->id ?? 0)
+            ->where('quest_zone_id', $parsedQuestCode['zone']->id ?? 0)
+            ->firstOrFail();
+        return view('tccx.quest.view', ['quest' => $quest]);
+    }
 
+    /**
+     * Get details of a quest by quest id
+     * intended for printing
+     * @param int $id a quest id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getQuestById($id)
+    {
+        $quest = Quest::whereId($id)->firstOrFail();
+        return view('tccx.quest.view', ['quest' => $quest]);
     }
 
     /**

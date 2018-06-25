@@ -37,6 +37,10 @@ Route::get('/quest/edit', 'TCCX\QuestController@editQuest')->name('tccx.quest.ed
 Route::post('/quest/edit', 'TCCX\QuestController@updateQuest');
 // Delete quest
 Route::post('/quest/delete', 'TCCX\QuestController@deleteQuest');
+// View quest
+Route::get('/quest/view/{code}', 'TCCX\QuestController@getQuest')->name('tcx.quest.view');
+Route::get('/quest/view/id/{id}', 'TCCX\QuestController@getQuestById')->name('tcx.quest.view.id')
+    ->where('id', '[0-9]+');
 
 //Route::get('/quest/locations','')->name('tccx.quests.locations');
 

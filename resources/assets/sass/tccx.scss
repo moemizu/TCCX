@@ -2,3 +2,35 @@
 #dialog-quest-delete {
   transition-duration: 160ms;
 }
+
+// Quest view
+#quest-code {
+  position: fixed;
+  top: 32px;
+  right: 64px;
+}
+
+.text-quest-code {
+  font-size: 3em;
+}
+
+.text-quest-details {
+  font-size: 1em;
+}
+
+.text-quest-header {
+  font-size: 1em;
+}
+
+@media print {
+  #quest-code {
+    top: 16px;
+    right: 16px;
+  }
+  .text-quest-details {
+    font-size: 1.5em;
+  }
+  .text-quest-header {
+    font-size: 1.5em;
+  }
+}
