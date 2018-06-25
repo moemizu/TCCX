@@ -54,3 +54,13 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+// Font awesome
+import fontawesome from '@fortawesome/fontawesome';
+import faFreeSolid from '@fortawesome/fontawesome-free-solid';
+import faFreeRegular from '@fortawesome/fontawesome-free-regular';
+import faFreeBrands from '@fortawesome/fontawesome-free-brands';
+
+// import content
+fontawesome.library.add(faFreeSolid, faFreeRegular, faFreeBrands);
+fontawesome.dom.i2svg();

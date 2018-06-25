@@ -108,10 +108,18 @@ class QuestController extends Controller
     /**
      * Delete a quest
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteQuest(Request $request)
     {
-
+        $quest = Quest::whereId($request->get('quest-id'))->firstOrFail();
+        $quest->delete();
+        return redirect()
+            ->back()
+            ->with('status', [
+                'type' => 'success',
+                'message' => 'Quest deleted!'
+            ]);
     }
 
     /**

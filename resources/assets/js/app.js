@@ -7,7 +7,11 @@
 
 require('./bootstrap');
 
+import {scrollToElement} from './page-util';
+import QuestSystem from './app-quest-system';
+
 window.Vue = require('vue');
+window.scrollToElement = scrollToElement;
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -21,17 +25,7 @@ const app = new Vue({
     el: '#app'
 });
 
-// Font awesome
-import fontawesome from '@fortawesome/fontawesome';
-import faFreeSolid from '@fortawesome/fontawesome-free-solid';
-import faFreeRegular from '@fortawesome/fontawesome-free-regular';
-import faFreeBrands from '@fortawesome/fontawesome-free-brands';
-
-// import content
-fontawesome.library.add(faFreeSolid, faFreeRegular, faFreeBrands);
-fontawesome.dom.i2svg();
-
-// library
-import {scrollToElement} from './page-util';
-
-window.scrollToElement = scrollToElement;
+$(document).ready(function () {
+    // initialize delete modal injection
+    QuestSystem.initializeDeleteModal('#quest-delete-modal');
+});

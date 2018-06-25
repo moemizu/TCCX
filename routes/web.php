@@ -35,6 +35,8 @@ Route::post('/quest/create', 'TCCX\QuestController@createQuestPost');
 // Edit quest
 Route::get('/quest/edit', 'TCCX\QuestController@editQuest')->name('tccx.quest.edit');
 Route::post('/quest/edit', 'TCCX\QuestController@updateQuest');
+// Delete quest
+Route::post('/quest/delete', 'TCCX\QuestController@deleteQuest');
 
 //Route::get('/quest/locations','')->name('tccx.quests.locations');
 
