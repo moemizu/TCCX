@@ -159,10 +159,10 @@ class QuestController extends Controller
         }
         // details
         // don't parse markdown
-        $quest->story = $request->get('story');
-        $quest->how_to = $request->get('how-to');
-        $quest->criteria = $request->get('criteria');
-        $quest->meta = $request->get('editorial');
+        $quest->story = $request->get('story', '');
+        $quest->how_to = $request->get('how-to', '');
+        $quest->criteria = $request->get('criteria', '');
+        $quest->meta = $request->get('editorial', '');
         // save
         $quest->save();
     }
