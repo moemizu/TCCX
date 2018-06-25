@@ -39,24 +39,20 @@ class ScoreboardController extends Controller
      */
     public function changeScore(SubmitScore $request)
     {
-        if ($request->isMethod(Request::METHOD_POST)) {
-            // team
-            $team = Team::whereId($request->get('team'))->first();
-            // score
-            $score = $request->get('score');
-            // new score
-            $team->score = $team->score + $score;
-            // save
-            $team->save();
-            // redirect to original page
-            return redirect()->route('tccx.scoreboard')
-                ->with('status', [
-                    'type' => 'success',
-                    'message' => 'Score has been updated!'
-                ]);
-        } else {
-            abort(401);
-        }
+        // team
+        $team = Team::whereId($request->get('team'))->first();
+        // score
+        $score = $request->get('score');
+        // new score
+        $team->score = $team->score + $score;
+        // save
+        $team->save();
+        // redirect to original page
+        return redirect()->route('tccx.scoreboard')
+            ->with('status', [
+                'type' => 'success',
+                'message' => 'Score has been updated!'
+            ]);
     }
 
 }

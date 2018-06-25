@@ -10,7 +10,6 @@ use App\TCCX\Quest\QuestZone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
-use function Psy\debug;
 
 /**
  * Controller for quest management
@@ -41,15 +40,10 @@ class QuestController extends Controller
 
     /**
      * Return create a new quest page
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function createQuest(Request $request)
+    public function createQuest()
     {
-        // load type and zone
-        $types = QuestType::all();
-        $zones = QuestZone::all();
-        $locations = QuestLocation::orderBy('name')->get();
         // return quest creation page
         return view('tccx.quest.create', $this->questSupportData());
     }
