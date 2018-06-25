@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\TCCX;
 
-use App\TCCX\Quest\QuestLocation;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Fluent;
 use Illuminate\Validation\Rule;
@@ -88,7 +88,14 @@ class StoreQuest extends FormRequest
     public function messages()
     {
         return [
-            'location-id.required' => 'Please select a location'
+            // location
+            'location-id.required' => 'Please select a location',
+            'location-id.exists' => 'Selected location must be valid',
+            'location-lat.required' => 'Please enter a latitude',
+            'location-lng.required' => 'Please enter a longitude',
+            'location-lat.regex' => 'Invalid pattern for latitude',
+            'location-lng.regex' => 'Invalid pattern for longitude',
+
         ];
     }
 }
