@@ -61,7 +61,7 @@
     <div class="form-group col-md-8 col-sm-8">
         <label class="col-form-label" for="input-location-id">Location</label>
         <select id="input-location-id" name="location-id" class="custom-select">
-            <option value="">None</option>
+            <option value="0">None</option>
             <?php $locId = old('location-id', $quest->quest_location_id ?? 0);?>
             @if(isset($locations))
                 @foreach($locations as $loc)

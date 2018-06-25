@@ -13,6 +13,7 @@
                         @include('tccx.shared.errors')
                         <form id="form-edit-quest" method="post" action="/quest/edit">
                         {{csrf_field()}}
+                            <input type="hidden" name="edit" value="1">
                         <!-- Common -->
                         @include('tccx.quest.form')
                         <!-- Submit  -->

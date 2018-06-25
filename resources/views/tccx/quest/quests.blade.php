@@ -41,7 +41,13 @@
                                     <td>{{str_limit(strip_tags($pd->parse($quest->how_to)),50)}}</td>
                                     <td>{{$quest->reward}}</td>
                                     <td class="text-muted">None</td>
-                                    <td>&#x22EF</td>
+                                    <td style="width: 170px;">
+                                        <a href="/quest/edit?id={{$quest->id}}&last_page={{request('page',1)}}"
+                                           class="btn btn-sm btn-primary" role="button" aria-disabled="true"><i
+                                                    class="fas fa-edit"></i> Edit</a>
+                                        <a href="#" class="btn btn-sm btn-danger" role="button" aria-disabled="true"><i
+                                                    class="fas fa-trash"></i> Delete</a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
