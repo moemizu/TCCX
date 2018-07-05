@@ -94,13 +94,15 @@
         <div class="form-group col-md-4 col-sm-6">
             <label class="col-form-label" for="input-location-lat">Latitude</label>
             <input type="text" pattern="(\-?\d+(\.\d+)?)" class="form-control"
-                   id="input-location-lat" name="location-lat" value="0.000000"
+                   id="input-location-lat" name="location-lat"
+                   value="{{old('location-lat',$quest->quest_location->lat ?? '0.000000')}}"
                    placeholder="Latitude">
         </div>
         <div class="form-group col-md-4 col-sm-6">
             <label class="col-form-label" for="input-location-lng">Longitude</label>
             <input type="text" pattern="(\-?\d+(\.\d+)?)" class="form-control"
-                   id="input-location-lng" name="location-lng" value="0.000000"
+                   id="input-location-lng" name="location-lng"
+                   value="{{old('location-lng',$quest->quest_location->lng ?? '0.000000')}}"
                    placeholder="Longitude">
         </div>
     </div>

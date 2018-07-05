@@ -47,3 +47,8 @@ Route::get('/quest/view/id/{id}', 'TCCX\QuestController@getQuestById')->name('tc
 //Route::get('/quest/zones','')->name('tccx.quests.locations');
 
 //Route::get('/quest/types','')->name('tccx.quests.locations');
+
+// People
+
+// Team list
+Route::view('/people/teams', 'tccx.people.team')->name('tccx.people.teams');

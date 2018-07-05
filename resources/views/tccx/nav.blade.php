@@ -15,7 +15,27 @@
                 <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/scoreboard"><i class="fas fa-star"></i> Scoreboard</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="/quest"><i class="fas fa-list-alt"></i> Quest</a></li>
+                <li class="nav-item dropdown"><a id="menu-quest" class="nav-link dropdown-toggle" href="/quest"
+                                                 role="button"
+                                                 data-toggle="dropdown"
+                                                 aria-haspopup="true" aria-expanded="false"><i
+                                class="fas fa-list-alt"></i>
+                        Quest</a>
+                    <div class="dropdown-menu" aria-labelledby="menu-quest">
+                        <a class="dropdown-item" href="/quest">Quests</a>
+                        <a class="dropdown-item" href="/quest/locations">Locations</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown"><a id="menu-people" class="nav-link dropdown-toggle" href="#"
+                                                 role="button"
+                                                 data-toggle="dropdown"
+                                                 aria-haspopup="true" aria-expanded="false"><i class="fas fa-users"></i>
+                        People</a>
+                    <div class="dropdown-menu" aria-labelledby="menu-people">
+                        <a class="dropdown-item" href="#">Team</a>
+                        <a class="dropdown-item" href="#">Member</a>
+                    </div>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
