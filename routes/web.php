@@ -42,7 +42,14 @@ Route::get('/quest/view/{code}', 'TCCX\QuestController@getQuest')->name('tcx.que
 Route::get('/quest/view/id/{id}', 'TCCX\QuestController@getQuestById')->name('tcx.quest.view.id')
     ->where('id', '[0-9]+');
 
-//Route::get('/quest/locations','')->name('tccx.quests.locations');
+// Quest Location
+// view
+Route::get('/quest/locations', 'TCCX\QuestLocationController@index')->name('tccx.quest.locations');
+// create/edit
+Route::get('/quest/location/edit', 'TCCX\QuestLocationController@edit')->name('tccx.quest.location.edit');
+Route::post('/quest/location/edit', 'TCCX\QuestLocationController@editPost');
+// delete
+Route::post('/quest/location/delete', 'TCCX\QuestLocationController@delete');
 
 //Route::get('/quest/zones','')->name('tccx.quests.locations');
 
@@ -51,4 +58,4 @@ Route::get('/quest/view/id/{id}', 'TCCX\QuestController@getQuestById')->name('tc
 // People
 
 // Team list
-Route::view('/people/teams', 'tccx.people.team')->name('tccx.people.teams');
+Route::get('/people/teams', 'TCCX\TeamController@index')->name('tccx.people.teams');

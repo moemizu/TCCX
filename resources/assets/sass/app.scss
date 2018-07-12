@@ -31,3 +31,11 @@ body {
 .sorting {
   cursor: pointer;
 }
+
+[v-cloak] {
+  display: none;
+}
+
+.cloak-transition {
+  transition: opacity 1s ease-in-out;
+}

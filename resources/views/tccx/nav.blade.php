@@ -32,7 +32,7 @@
                                                  aria-haspopup="true" aria-expanded="false"><i class="fas fa-users"></i>
                         People</a>
                     <div class="dropdown-menu" aria-labelledby="menu-people">
-                        <a class="dropdown-item" href="#">Team</a>
+                        <a class="dropdown-item" href="/people/teams">Team</a>
                         <a class="dropdown-item" href="#">Member</a>
                     </div>
                 </li>
