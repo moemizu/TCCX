@@ -16,10 +16,19 @@
                             <thead class="w-100">
                             <tr>
                                 <th scope="col">#</th>
-                                <th class="sorting" scope="col">Team Name <span class="float-right"><i
-                                                class="fas fa-sort"></i></span></th>
-                                <th class="sorting" scope="col">Score <span class="float-right"><i
-                                                class="fas fa-sort"></i></span></th>
+                                <th class="sorting" scope="col">
+                                    <a href="{{ route('tccx.scoreboard',
+                                    ['sort' => $sorting->inv('name')])}}">
+                                        Team Name <span class="float-right">
+                                            <i class="fas fa-{{$sorting->dir('name',['sort-down','sort-up','sort'])}}">
+                                            </i></span></a>
+                                </th>
+                                <th class="sorting" scope="col"><a href="{{ route('tccx.scoreboard',
+                                    ['sort' => $sorting->inv('score')])}}">
+                                        Score <span class="float-right">
+                                            <i class="fas fa-{{$sorting->dir('score',['sort-down','sort-up','sort'])}}">
+                                            </i></span></a>
+                                </th>
                                 <th scope="col">Last Action</th>
                             </tr>
                             </thead>

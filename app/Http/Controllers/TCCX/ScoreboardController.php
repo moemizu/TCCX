@@ -5,6 +5,7 @@ namespace App\Http\Controllers\TCCX;
 use App\Http\Requests\TCCX\SubmitScore;
 use App\SortingRule;
 use App\TCCX\Team;
+use App\UserSorting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,24 +13,32 @@ class ScoreboardController extends Controller
 {
     private $scoreboardSorting;
 
+    private $keys = ['id' => '', 'order' => '', 'name' => '', 'score' => ''];
+
     public function __construct()
     {
         $this->scoreboardSorting = new SortingRule(
-            ['id', 'order', 'name', 'score'], 'score', 'desc'
+            $this->keys, 'score', 'desc'
         );
     }
 
     /**
      * Return view of scoreboard front page
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
         // get sorting key, default to score
-        $sort = $request->get('sort', 'score');
-        list($key, $direction) = $this->scoreboardSorting->keyOrDefault($sort);
+        //$sort = $request->get('sort', 'score');
+        //list($key, $direction) = $this->scoreboardSorting->keyOrDefault($sort);
+        $sorting = new UserSorting($this->keys, (string)$request->get('sort', ''));
         // get all team
-        $teams = Team::orderBy($key, $direction)->get();
-        return view('tccx.scoreboard', ['teams' => $teams]);
+        $query = Team::query();
+        foreach ($sorting->whatToSort() as $key => $direction)
+            $query->orderBy($key, $direction);
+        $teams = $query->get();
+        return view('tccx.scoreboard', ['teams' => $teams, 'sorting' => $sorting]);
     }
 
     /**
@@ -48,7 +57,7 @@ class ScoreboardController extends Controller
         // save
         $team->save();
         // redirect to original page
-        return redirect()->route('tccx.scoreboard')
+        return redirect()->back()
             ->with('status', [
                 'type' => 'success',
                 'message' => 'Score has been updated!'
