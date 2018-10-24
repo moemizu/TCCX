@@ -50,6 +50,9 @@
                                            data-quest="{{$quest->id}}" class="btn btn-sm btn-danger" role="button"
                                            aria-disabled="true"><i
                                                     class="fas fa-trash"></i> Delete</a>
+                                        <a href="" data-toggle="modal" data-target="#quest-assign-modal"
+                                           data-quest="{{$quest->id}}" class="btn btn-sm btn-info" role="button"
+                                           aira-disablled="true"><i class="fas fa-file"></i> Assign</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -84,6 +87,39 @@
                                         </button>
                                         <button type="button" class="btn btn-danger"
                                                 onclick="$('form#form-delete-quest').submit()">Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- assign modal -->
+                        <div class="modal fade" id="quest-assign-modal" tabindex="-1" role="dialog"
+                             aria-labelledby="quest-assign-message" aria-hidden="true">
+                            <div id="dialog-quest-assign" class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="quest-assign-message">Assign Quest</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-info">Please select a quest</p>
+                                        <form id="form-assign-quest" method="post" action="/quest/assign">
+                                            {{csrf_field()}}
+                                            <input type="hidden" id="input-assign-quest" name="quest-id" value="">
+                                            <select id="select-team" name="selected-team" class="form-control">
+                                                @foreach($teams as $team)
+                                                    <option value="{{$team->id}}">{{$team->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                                        </button>
+                                        <button type="button" class="btn btn-info"
+                                                onclick="$('form#form-assign-quest').submit()">Assign
                                         </button>
                                     </div>
                                 </div>

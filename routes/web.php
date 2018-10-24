@@ -41,6 +41,8 @@ Route::post('/quest/delete', 'TCCX\QuestController@deleteQuest');
 Route::get('/quest/view/{code}', 'TCCX\QuestController@getQuest')->name('tcx.quest.view');
 Route::get('/quest/view/id/{id}', 'TCCX\QuestController@getQuestById')->name('tcx.quest.view.id')
     ->where('id', '[0-9]+');
+// Assign
+Route::post('/quest/assign', 'TCCX\QuestController@assignQuest');
 
 // Quest Location
 // view
