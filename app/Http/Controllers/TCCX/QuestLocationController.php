@@ -32,15 +32,14 @@ class QuestLocationController extends Controller
      */
     public function editPost(StoreQuestLocation $request)
     {
-        $creation = !QuestLocation::whereId($request->get('quest-location-id'))->exists();
+        $creation = !QuestLocation::whereId($request->get('id'))->exists();
         QuestLocation::updateOrCreate([
-            ['id' => $request->get('quest-location-id')],
-            [
-                'name' => $request->get('name'),
-                'type' => $request->get('type'),
-                'lat' => $request->get('lat'),
-                'lng' => $request->get('lng')
-            ]
+            'id' => $request->get('id')
+        ], [
+            'name' => $request->get('name'),
+            'type' => $request->get('type'),
+            'lat' => $request->get('lat'),
+            'lng' => $request->get('lng')
         ]);
         $status = [
             'success' => true,
@@ -54,10 +53,10 @@ class QuestLocationController extends Controller
     {
         // validate
         $this->validate($request, [
-            'quest-location-id' => 'required|exists:quest_locations,id'
+            'id' => 'required|exists:quest_locations,id'
         ]);
         // find model
-        $ql = QuestLocation::whereId($request->get('quest-location-id'))->firstOrFail();
+        $ql = QuestLocation::whereId($request->get('id'))->firstOrFail();
         // and delete it
         $ql->delete();
         $status = [

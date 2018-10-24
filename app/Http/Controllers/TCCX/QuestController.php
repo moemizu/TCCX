@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\TCCX;
 
+use App\Http\Requests\TCCX\AssignQuest;
 use App\Http\Requests\TCCX\StoreQuest;
 use App\TCCX\Quest\Quest;
 use App\TCCX\Quest\QuestLocation;
 use App\TCCX\Quest\QuestType;
 use App\TCCX\Quest\QuestZone;
+use App\TCCX\Team;
+use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,7 +39,8 @@ class QuestController extends Controller
     public function index()
     {
         $quests = Quest::with('quest_type', 'quest_zone', 'quest_location')->paginate(10);
-        return view('tccx.quest.quests', ['quests' => $quests]);
+        $teams = Team::all();
+        return view('tccx.quest.quests', ['quests' => $quests, 'teams' => $teams]);
     }
 
     /**
@@ -144,6 +148,25 @@ class QuestController extends Controller
     }
 
     /**
+     * Assign a quest to specified team
+     * @param AssignQuest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function assignQuest(AssignQuest $request)
+    {
+        $teamId = $request->get('selected-team');
+        $questId = $request->get('quest-id');
+        // Query related model (team and quest)
+        $quest = Quest::whereId($questId)->firstOrFail();
+        $team = Team::whereId($teamId)->firstOrFail();
+        // If quest has not been assigned
+        if ($this->canBeAssigned($quest)) {
+            $quest->teams()->attach($team->id, ['assigned_at' => Carbon::now()]);
+        }
+        return redirect()->back()->with('status', ['type' => 'success', 'message' => 'Quest has been assigned!']);
+    }
+
+    /**
      * Update a quest model
      * @param Quest $quest
      * @param Request $request
@@ -161,7 +184,7 @@ class QuestController extends Controller
         $quest->quest_type()->associate($questType);
         // difficulty, reward
         $quest->difficulty = $request->get('difficulty', 'Normal');
-        $quest->reward = $this->difficulties[$quest->difficulty];
+        $quest->reward = $request->get('reward', $this->difficulties[$quest->difficulty]);
         $quest->multiple_team = $questType->name == 'Contest';
         // location
         $LocationId = $request->get('location-id');
@@ -185,7 +208,8 @@ class QuestController extends Controller
         $quest->story = $request->get('story', '');
         $quest->how_to = $request->get('how-to', '');
         $quest->criteria = $request->get('criteria', '');
-        $quest->meta = $request->get('editorial', '');
+        // Somehow, default value is not working (use ?? instead)
+        $quest->meta = $request->get('editorial', '') ?? "";
         // save
         $quest->save();
     }
@@ -203,5 +227,20 @@ class QuestController extends Controller
             'types' => $types, 'zones' => $zones, 'locations' => $locations,
             'difficulties' => $this->difficulties
         ];
+    }
+
+    /**
+     * Can you assign the quest to specified team?
+     * @param Quest $quest
+     * @return bool
+     */
+    public function canBeAssigned(Quest $quest)
+    {
+        // if quest can be assigned to multiple team
+        if ($quest->multiple_team) {
+            return true;
+        } else {
+            return !$quest->teams()->exists();
+        }
     }
 }

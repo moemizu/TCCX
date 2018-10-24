@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class QuestLocation extends Model
 {
+    protected $fillable = ['name', 'lat', 'lng', 'type'];
     public function quests()
     {
         return $this->hasMany(Quest::class, 'quest_location_id');
