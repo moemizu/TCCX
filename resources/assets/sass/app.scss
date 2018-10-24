@@ -28,8 +28,10 @@ body {
 }
 
 // Table
-.sorting {
+.sorting, .sorting > a {
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
 
 [v-cloak] {
