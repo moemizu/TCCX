@@ -64,6 +64,9 @@ class Quest extends Model
         return $this->belongsTo(QuestLocation::class, 'quest_location_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function teams()
     {
         return $this->belongsToMany(Team::class)
