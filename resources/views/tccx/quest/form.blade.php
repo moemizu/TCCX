@@ -39,17 +39,23 @@
             @endif
         </select>
     </div>
-    <div class="form-group col-md-4 col-sm-4">
+    <div class="form-group col-md-2 col-sm-2">
         <label class="col-form-label" for="input-zone">Difficulty</label>
         <select id="input-difficulty" name="difficulty" class="custom-select">
             @if(isset($difficulties))
                 @foreach($difficulties as $difficulty => $reward)
                     <option @if($difficulty == old('difficulty',$quest->difficulty ?? 'Normal')) selected
-                            @endif value="{{$difficulty}}">{{$difficulty}} ({{$reward}})
+                            @endif value="{{$difficulty}}">{{$difficulty}}
                     </option>
                 @endforeach
             @endif
         </select>
+    </div>
+    <div class="form-group col-md-2 col-sm-2">
+        <label class="col-form-label" for="input-reward">Reward</label>
+        <input required type="number" min="0" class="form-control"
+               id="input-reward" name="reward"
+               placeholder="Reward" value="{{old('reward',$quest->reward ?? '')}}">
     </div>
 </div>
 <!-- Location -->
