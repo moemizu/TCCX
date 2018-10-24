@@ -1,10 +1,13 @@
 import Vue from "vue";
 
 export const QuestSystem = {
-    initializeDeleteModal: function (modalSelector, dataKey, inputFieldSelector) {
+    initializeModalInjection: function (modalSelector, dataMap) {
         this.onModalClick(modalSelector, function (button, modal) {
-            let data = button.data(dataKey);
-            modal.find(inputFieldSelector).val(data);
+            if (dataMap != null && (typeof dataMap === 'object'))
+                for (let key in dataMap) {
+                    let data = button.data(key);
+                    modal.find(dataMap[key]).val(data);
+                }
         });
     },
     onModalClick: function (modalSelector, action) {

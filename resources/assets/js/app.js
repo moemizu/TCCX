@@ -18,6 +18,7 @@ $(document).ready(function () {
     // mount quest location app
     mountVueApp('#quest-location-list', new QuestLocationApp());
     // initialize delete modal injection
-    QuestSystem.initializeDeleteModal('#quest-delete-modal', 'quest', 'input#input-delete-quest');
-    QuestSystem.initializeDeleteModal('#quest-location-delete-modal', 'quest_loc', 'input#input-delete-quest-location');
+    QuestSystem.initializeModalInjection('#quest-delete-modal', {'quest': 'input#input-delete-quest'});
+    QuestSystem.initializeModalInjection('#quest-location-delete-modal', {'quest_loc': 'input#input-delete-quest-location'});
+    QuestSystem.initializeModalInjection('#quest-assign-modal', {'quest': 'input#input-assign-quest'});
 });
