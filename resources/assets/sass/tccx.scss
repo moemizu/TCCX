@@ -1,6 +1,7 @@
 // Modal
-#dialog-quest-delete {
-  transition-duration: 160ms;
+$quest-dialog-duration: 160ms;
+#dialog-quest-delete, #dialog-quest-assign {
+  transition-duration: $quest-dialog-duration;
 }
 
 // Quest view
