@@ -1,4 +1,5 @@
 import Vue from "vue";
+import axios from "axios";
 
 export const QuestSystem = {
     initializeModalInjection: function (modalSelector, dataMap) {
@@ -23,33 +24,58 @@ export const QuestSystem = {
 
 export const QuestLocationRow = {
     data() {
-        return {}
+        return {
+            location: {
+                id: 0,
+                name: '',
+                type: '',
+                lat: 0.0,
+                lng: 0.0
+            },
+        }
     },
     props: ['id', 'name', 'type', 'lat', 'lng'],
     template: '<tr><td>{{id}}</td>' +
-    '<td contenteditable="true">{{name}}</td>' +
-    '<td contenteditable="true">{{type}}</td>' +
+    '<td @input="updateData(\'name\',$event)" contenteditable="true">{{name}}</td>' +
+    '<td @input="updateData(\'type\',$event)" contenteditable="true">{{type}}</td>' +
     '<td contenteditable="true">{{lat}},{{lng}}</td>' +
     '<td>' +
-    '<button @click="saveItem" class="btn btn-sm btn-primary" role="button" aria-disabled="true"><i class="fas fa-edit"></i> Save</button> ' +
-    '<button @click="deleteItem" data-toggle="modal" data-target="#quest-location-delete-modal"' +
+    '<button @click="triggerSaveItem" class="btn btn-sm btn-primary" :class="buttonStyle" role="button" aria-disabled="true"><i class="fas fa-edit"></i> Save</button> ' +
+    '<button @click="triggerDeleteItem" data-toggle="modal" data-target="#quest-location-delete-modal"' +
     ' :data-quest_loc="id" class="btn btn-sm btn-danger" role="button"' +
     ' aria-disabled="true"><i class="fas fa-trash"></i> Delete</button>' +
     '</td></tr>',
+    created() {
+        Object.keys(this.$props).forEach((key) => {
+            this.location[key] = this[key]
+        });
+    },
     methods: {
-        saveItem() {
-            console.log('TODO: Save');
+        updateData(key, event) {
+            this.location[key] = event.target.innerText;
         },
-        deleteItem() {
-            console.log('TODO: Delete');
+        triggerSaveItem() {
+            this.$emit('save-item', this.location);
+        },
+        triggerDeleteItem() {
+            this.$emit('delete-item', this.location);
+        }
+    },
+    computed: {
+        buttonStyle() {
+            return {
+                'btn-secondary': this.location.id == 0
+            };
         }
     }
 };
 
+// TODO: Rework state management
 export const QuestLocationApp = Vue.extend({
     data() {
         return {
-            questLocations: []
+            questLocations: [],
+            selectedLocation: null
         }
     },
     components: {
@@ -60,12 +86,37 @@ export const QuestLocationApp = Vue.extend({
     },
     methods: {
         create() {
-            this.questLocations.push({
+            this.questLocations.unshift({
                 id: '',
                 name: '',
                 type: 'default',
                 lat: '0.000000',
                 lng: '0.000000'
+            });
+        },
+        initDeleteItem(loc) {
+            console.log("Location selected");
+            this.selectedLocation = loc;
+        },
+        deleteItem() {
+            console.log(this.selectedLocation);
+            axios.post('/quest/location/delete', this.selectedLocation).then((response) => {
+                console.log(response.data.message);
+                // HACK: linear search
+                this.questLocations = this.questLocations.filter(ql => ql.id !== this.selectedLocation.id);
+            }).catch(reason => {
+                console.log("Error");
+                console.error(reason);
+            });
+        },
+        saveItem(loc) {
+            this.selectedLocation = loc;
+            console.log(this.selectedLocation);
+            axios.post('/quest/location/edit', this.selectedLocation).then((response) => {
+                console.log(response.data.message);
+            }).catch(reason => {
+                console.log("Error");
+                console.error(reason);
             });
         }
     }

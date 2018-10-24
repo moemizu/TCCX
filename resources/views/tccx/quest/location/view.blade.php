@@ -30,7 +30,7 @@
                             <tbody v-cloak class="cloak-transition">
                             <tr is="quest-location" v-for="ql in questLocations" :key="ql.id" :id="ql.id"
                                 :name="ql.name" :type="ql.type"
-                                :lat="ql.lat" :lng="ql.lng"></tr>
+                                :lat="ql.lat" :lng="ql.lng" @delete-item="initDeleteItem" @save-item="saveItem"></tr>
                             </tbody>
                         </table>
                         <div class="row d-print-none">
@@ -63,8 +63,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
                                         </button>
-                                        <button type="button" class="btn btn-danger"
-                                                onclick="$('form#form-delete-quest-location').submit()">Delete
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                                @click="deleteItem">Delete
                                         </button>
                                     </div>
                                 </div>
