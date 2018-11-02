@@ -43,6 +43,8 @@ Route::get('/quest/view/id/{id}', 'TCCX\QuestController@getQuestById')->name('tc
     ->where('id', '[0-9]+');
 // Assign
 Route::post('/quest/assign', 'TCCX\QuestController@assignQuest');
+// Finish
+Route::post('/quest/finish', 'TCCX\QuestController@finishQuest');
 
 // Quest Location
 // view

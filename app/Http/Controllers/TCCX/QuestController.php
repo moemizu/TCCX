@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TCCX;
 
 use App\Http\Requests\TCCX\AssignQuest;
+use App\Http\Requests\TCCX\FinishQuest;
 use App\Http\Requests\TCCX\StoreQuest;
 use App\TCCX\Quest\Quest;
 use App\TCCX\Quest\QuestLocation;
@@ -10,9 +11,11 @@ use App\TCCX\Quest\QuestType;
 use App\TCCX\Quest\QuestZone;
 use App\TCCX\Team;
 use Carbon\Carbon;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Contracts\Foundation\Application;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -22,14 +25,23 @@ use Illuminate\Support\Facades\Log;
 class QuestController extends Controller
 {
     private $difficulties;
+    /**
+     * @var \Illuminate\Contracts\Foundation\Application $app ;
+     */
+    private $app;
 
-    public function __construct()
+    /**
+     * QuestController constructor.
+     * @param App $app
+     */
+    public function __construct(Application $app)
     {
         $this->difficulties = [
             'Easy' => 100,
             'Normal' => 200,
             'Hard' => 300
         ];
+        $this->app = $app;
     }
 
     /**
@@ -81,7 +93,7 @@ class QuestController extends Controller
      */
     public function getQuest($code)
     {
-        $qc = resolve('App\TCCX\Quest\QuestCode');
+        $qc = $this->app->make('App\TCCX\Quest\QuestCode');
         $parsedQuestCode = $qc->parse($code);
         $quest = Quest::where('order', $parsedQuestCode['order'])
             ->where('quest_type_id', $parsedQuestCode['type']->id ?? 0)
@@ -159,11 +171,39 @@ class QuestController extends Controller
         // Query related model (team and quest)
         $quest = Quest::whereId($questId)->firstOrFail();
         $team = Team::whereId($teamId)->firstOrFail();
-        // If quest has not been assigned
-        if ($this->canBeAssigned($quest)) {
-            $quest->teams()->attach($team->id, ['assigned_at' => Carbon::now()]);
+        // If quest has been assigned
+        if (!$quest->canBeAssigned()) {
+            return back()->with('status', ['type' => 'danger', 'message' => 'Quest has already been assigned!']);
         }
-        return redirect()->back()->with('status', ['type' => 'success', 'message' => 'Quest has been assigned!']);
+        // attach a team to a quest
+        $quest->teams()->attach($team->id, ['assigned_at' => Carbon::now()]);
+        return back()->with('status', ['type' => 'success', 'message' => 'Quest has been assigned!']);
+    }
+
+    /**
+     * Mark a quest for completion
+     * @param FinishQuest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function finishQuest(FinishQuest $request)
+    {
+        $questId = $request->get('quest-id');
+        $note = $request->get('note', '');
+        $quest = Quest::whereId($questId)->first();
+        // if quest hasn't been assigned to someone
+        if ($quest->assignedTo() == null)
+            return back()->with('status', [
+                'type' => 'danger',
+                'message' => 'This quest can\'t be mark for completion!, please assign it to someone!']);
+        $team = $quest->teams()->first();
+        // mark for completion
+        $quest->teams()->updateExistingPivot($team, ['note' => $note, 'completed_at' => Carbon::now()]);
+        $qc = $this->app->make('App\TCCX\Quest\QuestCode');
+        return back()->with('status', [
+            'type' => 'success',
+            'message' => sprintf('Quest %s is marked for completion and team %s has been rewarded for %s points!',
+                $qc->generate($quest), $team->name, $quest->reward)
+        ]);
     }
 
     /**

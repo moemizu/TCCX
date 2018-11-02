@@ -21,4 +21,5 @@ $(document).ready(function () {
     QuestSystem.initializeModalInjection('#quest-delete-modal', {'quest': 'input#input-delete-quest'});
     QuestSystem.initializeModalInjection('#quest-location-delete-modal', {'quest_loc': 'input#input-delete-quest-location'});
     QuestSystem.initializeModalInjection('#quest-assign-modal', {'quest': 'input#input-assign-quest'});
+    QuestSystem.initializeModalInjection('#quest-finish-modal', {'quest': 'input#input-finish-quest'});
 });

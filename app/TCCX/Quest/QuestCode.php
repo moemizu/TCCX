@@ -30,8 +30,8 @@ class QuestCode
         // convert to lower case
         $code = strtolower($code);
         // retrieve type and zone data
-        $types = QuestType::all(['id', 'code']);
-        $zones = QuestZone::all(['id', 'code']);
+        $types = resolve('App\TCCX\Quest\QuestType')->all(['id', 'code']);
+        $zones = resolve('App\TCCX\Quest\QuestZone')->all(['id', 'code']);
         $parsedType = null;
         $parsedZone = null;
         $parsedOrder = 0;

@@ -73,4 +73,36 @@ class Quest extends Model
             ->withPivot('assigned_at', 'completed_at', 'note')
             ->withTimestamps();
     }
+
+    /**
+     * Can you assign this quest to specified team?
+     * @return bool
+     */
+    public function canBeAssigned()
+    {
+        if ($this->multiple_team) {
+            return true;
+        } else {
+            return !$this->teams()->exists();
+        }
+    }
+
+    /**
+     * Get the team who will do this quest
+     * @return Team|null
+     */
+    public function assignedTo()
+    {
+        return $this->teams()->first();
+    }
+
+
+    /**
+     * Check if quest has been completed
+     * @return bool
+     */
+    public function isCompleted()
+    {
+        return !empty($this->teams()->first()->pivot->completed_at);
+    }
 }

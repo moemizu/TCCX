@@ -9,7 +9,7 @@
         <div id="team-grid" class="row">
             @foreach($teams as $team)
                 <div class="col-md-4 col-sm-6 col-12 mb-4 d-flex align-items-stretch">
-                    <div class="card">
+                    <div id="team-{{$team->id}}" class="card">
                         <h5 class="card-header">Team #{{$team->id}}</h5>
                         <div class="card-body">
                             <div class="row">
