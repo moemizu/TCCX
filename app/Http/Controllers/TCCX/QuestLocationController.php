@@ -6,12 +6,13 @@ use App\Http\Requests\TCCX\StoreQuestLocation;
 use App\TCCX\Quest\QuestLocation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class QuestLocationController extends Controller
 {
     public function index()
     {
-        $ql = QuestLocation::paginate(10);
+        $ql = QuestLocation::orderByDesc('updated_at')->paginate(10);
         return view('tccx.quest.location.view', [
             'questLocations' => $ql
         ]);
@@ -52,9 +53,14 @@ class QuestLocationController extends Controller
     public function delete(Request $request)
     {
         // validate
-        $this->validate($request, [
-            'id' => 'required|exists:quest_locations,id'
-        ]);
+        try {
+            $this->validate($request, [
+                'id' => 'required|exists:quest_locations,id'
+            ]);
+        } catch (ValidationException $e) {
+            // TODO: display error
+            return back();
+        }
         // find model
         $ql = QuestLocation::whereId($request->get('id'))->firstOrFail();
         // and delete it
