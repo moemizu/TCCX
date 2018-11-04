@@ -20,13 +20,13 @@
                                     <a href="{{ route('tccx.scoreboard',
                                     ['sort' => $sorting->inv('name')])}}">
                                         Team Name <span class="float-right">
-                                            <i class="fas fa-{{$sorting->dir('name',['sort-down','sort-up','sort'])}}">
+                                            <i class="fas fa-{{$sorting->dir('name',['sort-up','sort-down','sort'])}}">
                                             </i></span></a>
                                 </th>
                                 <th class="sorting" scope="col"><a href="{{ route('tccx.scoreboard',
                                     ['sort' => $sorting->inv('score')])}}">
                                         Score <span class="float-right">
-                                            <i class="fas fa-{{$sorting->dir('score',['sort-down','sort-up','sort'])}}">
+                                            <i class="fas fa-{{$sorting->dir('score',['sort-up','sort-down','sort'])}}">
                                             </i></span></a>
                                 </th>
                                 <th scope="col">Last Action</th>
