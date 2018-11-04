@@ -39,7 +39,7 @@
 
             <dt class="col-sm-2">Location</dt>
             <dd class="col-sm-10">
-                {{$quest->quest_location->name}} ({{$quest->quest_location->type}})
+                {{$quest->quest_location->name ?? 'Unspecified'}} ({{$quest->quest_location->type ?? 'Unknown'}})
             </dd>
 
             <dt class="col-sm-2">Difficulty (Reward)</dt>

@@ -40,7 +40,12 @@
                                            target="_blank">{{$quest->name}}</a></td>
                                     <td>{{$qc->generate($quest)}}</td>
                                     <td>{{ucfirst($quest->difficulty)}}</td>
-                                    <td>{{$quest->quest_location->name}}</td>
+                                    <td>@if(isset($quest->quest_location))
+                                            {{$quest->quest_location->name}}
+                                        @else <span
+                                                    class="text-muted font-italic">Unspecified</span>
+                                        @endif
+                                    </td>
                                 <!--<td>{{str_limit(strip_tags($pd->parse($quest->how_to)),50)}}</td>-->
                                     <td>{{$quest->reward}}</td>
                                     <td class="text-muted">
