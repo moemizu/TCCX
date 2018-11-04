@@ -7,16 +7,16 @@
 
 require('./bootstrap');
 
-import {scrollToElement, mountVueApp} from './tccx/page-util';
+import * as PageUtil from './tccx/page-util';
 import QuestSystem, {QuestLocationApp} from './tccx/app-quest-system';
 import Vue from 'vue';
 
 window.Vue = Vue;
-window.scrollToElement = scrollToElement;
+window.PageUtil = PageUtil;
 
 $(document).ready(function () {
     // mount quest location app
-    mountVueApp('#quest-location-list', new QuestLocationApp());
+    PageUtil.mountVueApp('#quest-location-list', new QuestLocationApp());
     // initialize delete modal injection
     QuestSystem.initializeModalInjection('#quest-delete-modal', {'quest': 'input#input-delete-quest'});
     QuestSystem.initializeModalInjection('#quest-location-delete-modal', {'quest_loc': 'input#input-delete-quest-location'});

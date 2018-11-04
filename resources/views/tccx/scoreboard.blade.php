@@ -100,7 +100,7 @@
 @push('scripts')
     @if (session()->has('scroll-to'))
         <script>
-            setTimeout(window.scrollToElement('{{session("scroll-to",'')}}'), 100);
+            setTimeout(window.PageUtil.scrollToElement('{{session("scroll-to",'')}}'), 100);
         </script>
     @endif
 @endpush
