@@ -46,6 +46,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\TCCX\Quest\QuestLocation|null $quest_location
  * @property-read \App\TCCX\Quest\QuestType|null $quest_type
  * @property-read \App\TCCX\Quest\QuestZone|null $quest_zone
+ * @property int $time
+ * @property int $group
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereGroup($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereTime($value)
  */
 class Quest extends Model
 {
@@ -104,5 +108,16 @@ class Quest extends Model
     public function isCompleted()
     {
         return !empty($this->teams()->first()->pivot->completed_at);
+    }
+
+
+    public function getTimeAttribute($value)
+    {
+        return ['X', 'M', 'A'][$value ?? 0];
+    }
+
+    public function setTimeAttribute($value)
+    {
+        $this->attributes['time'] = ['X' => 0, 'M' => 1, 'A' => 2][$value] ?? 0;
     }
 }

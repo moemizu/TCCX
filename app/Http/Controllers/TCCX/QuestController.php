@@ -96,8 +96,10 @@ class QuestController extends Controller
         $qc = $this->app->make('App\TCCX\Quest\QuestCode');
         $parsedQuestCode = $qc->parse($code);
         $quest = Quest::where('order', $parsedQuestCode['order'])
-            ->where('quest_type_id', $parsedQuestCode['type']->id ?? 0)
-            ->where('quest_zone_id', $parsedQuestCode['zone']->id ?? 0)
+            ->where('quest_type_id', $parsedQuestCode['type'])
+            ->where('quest_zone_id', $parsedQuestCode['zone'])
+            ->where('time', $parsedQuestCode['time'])
+            ->where('group', $parsedQuestCode['group'])
             ->firstOrFail();
         return view('tccx.quest.view', ['quest' => $quest]);
     }

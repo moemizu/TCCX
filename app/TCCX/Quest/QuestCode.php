@@ -3,6 +3,17 @@
 namespace App\TCCX\Quest;
 
 
+/**
+ * Class QuestCode
+ * Format: [Time][Zone][Type][Group No.][Quest No.]
+ * 0 -> Morning(M) or Afternoon(A)
+ * 1 -> Siam(S) or Rattanakosin(R)
+ * 2 -> Main(M) or Side(S) or Lunch(L) or Contest(C)
+ * 3 -> 00 for unspecified, 01 to 12 for group 1 to 12
+ * 4 -> 01 - 99 (12,22,32,42 reserved for main, lunch)
+ * @package App\TCCX\Quest
+ *
+ */
 class QuestCode
 {
     /**
@@ -16,7 +27,9 @@ class QuestCode
         $type = optional($quest->quest_type)->code ?? '';
         $zone = optional($quest->quest_zone)->code ?? '';
         $number = sprintf('%02d', $quest->order);
-        return strtoupper($type . $zone . $number);
+        $time = $quest->time;
+        $group = sprintf('%02d', $quest->group);
+        return strtoupper($time . $zone . $type . $group . $number);
     }
 
     /**
@@ -30,34 +43,26 @@ class QuestCode
         // convert to lower case
         $code = strtolower($code);
         // retrieve type and zone data
-        $types = resolve('App\TCCX\Quest\QuestType')->all(['id', 'code']);
-        $zones = resolve('App\TCCX\Quest\QuestZone')->all(['id', 'code']);
-        $parsedType = null;
-        $parsedZone = null;
-        $parsedOrder = 0;
-        // parse first section
-        foreach ($types as $type) {
-            $typeCode = strtolower($type->code);
-            if (starts_with($code, $typeCode)) {
-                $parsedType = $type;
-                // replace parsed code
-                $code = str_replace_first($typeCode, '', $code);
-                break;
-            }
-        }
-        // second
-        foreach ($zones as $zone) {
-            $zoneCode = strtolower($zone->code);
-            if (starts_with($code, $zoneCode)) {
-                $parsedZone = $zone;
-                $parsedOrder = (int)(str_replace_first($zoneCode, '', $code));
-                break;
-            }
-        }
+        $types = resolve('App\TCCX\Quest\QuestType');
+        $zones = resolve('App\TCCX\Quest\QuestZone');
+        // data
+        $time = substr($code, 0, 1);
+        $zone = substr($code, 1, 1);
+        $type = substr($code, 2, 1);
+        $group = substr($code, 3, 2);
+        $order = substr($code, 5);
+        // transform
+        $time = ['x' => 0, 'm' => 1, 'a' => 2][$time] ?? 0;
+        $zone = $zones->where('code', $zone)->first()->id;
+        $type = $types->where('code', $type)->first()->id;
+        $group = (int)$group;
+        $order = (int)$order;
         return [
-            'type' => $parsedType,
-            'zone' => $parsedZone,
-            'order' => $parsedOrder
+            'time' => $time,
+            'zone' => $zone,
+            'type' => $type,
+            'group' => $group,
+            'order' => $order
         ];
     }
 }
