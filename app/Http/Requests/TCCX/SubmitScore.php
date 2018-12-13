@@ -25,7 +25,8 @@ class SubmitScore extends FormRequest
     {
         return [
             'score' => 'required|integer',
-            'team' => 'required|integer'
+            'team' => 'nullable|integer',
+            'all-team' => 'nullable|boolean'
         ];
     }
 

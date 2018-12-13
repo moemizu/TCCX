@@ -79,6 +79,12 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="custom-control custom-checkbox mb-2">
+                                <input type="checkbox" class="custom-control-input" id="input-team-checkbox"
+                                       name="all-team" value="1">
+                                <label class="custom-control-label" for="input-team-checkbox">Apply change to all
+                                    team</label>
+                            </div>
                             <div class="form-group">
                                 <label for="input-score">Amount</label>
                                 <input type="number" class="form-control form-control-sm" name="score" id="input-score"

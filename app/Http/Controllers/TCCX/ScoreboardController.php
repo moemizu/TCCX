@@ -48,14 +48,22 @@ class ScoreboardController extends Controller
      */
     public function changeScore(SubmitScore $request)
     {
-        // team
-        $team = Team::whereId($request->get('team'))->first();
+        $allTeam = $request->get('all-team', false);
+        $teams = [];
+        if ($allTeam) {
+            $teams = Team::all();
+        } else {
+            $teams[] = Team::whereId($request->get('team'))->first();
+        }
         // score
         $score = $request->get('score');
-        // new score
-        $team->score = $team->score + $score;
-        // save
-        $team->save();
+        // for every team (or selected one)
+        foreach ($teams as $team) {
+            // new score
+            $team->score = $team->score + $score;
+            // save
+            $team->save();
+        }
         // redirect to original page
         return redirect()->back()
             ->with('status', [

@@ -10,6 +10,7 @@ require('./bootstrap');
 import * as PageUtil from './tccx/page-util';
 import QuestSystem, {QuestLocationApp} from './tccx/app-quest-system';
 import Vue from 'vue';
+import * as Scoreboard from './tccx/score.js';
 
 window.Vue = Vue;
 window.PageUtil = PageUtil;
@@ -22,4 +23,6 @@ $(document).ready(function () {
     QuestSystem.initializeModalInjection('#quest-location-delete-modal', {'quest_loc': 'input#input-delete-quest-location'});
     QuestSystem.initializeModalInjection('#quest-assign-modal', {'quest': 'input#input-assign-quest'});
     QuestSystem.initializeModalInjection('#quest-finish-modal', {'quest': 'input#input-finish-quest'});
+    // scoreboard
+    Scoreboard.disableSelectWhenChecked('#input-team', '#input-team-checkbox');
 });
