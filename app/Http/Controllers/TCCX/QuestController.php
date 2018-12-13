@@ -201,6 +201,9 @@ class QuestController extends Controller
         // mark for completion
         $quest->teams()->updateExistingPivot($team, ['note' => $note, 'completed_at' => Carbon::now()]);
         $qc = $this->app->make('App\TCCX\Quest\QuestCode');
+        // reward team
+        $team->score = $team->score + $quest->reward;
+        $team->save();
         return back()->with('status', [
             'type' => 'success',
             'message' => sprintf('Quest %s is marked for completion and team %s has been rewarded for %s points!',
