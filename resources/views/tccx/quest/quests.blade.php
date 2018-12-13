@@ -131,7 +131,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p class="text-info">Please select a quest</p>
+                                        <p class="text-info">Please select a team</p>
                                         <form id="form-assign-quest" method="post" action="/quest/assign">
                                             {{csrf_field()}}
                                             <input type="hidden" id="input-assign-quest" name="quest-id" value="">
