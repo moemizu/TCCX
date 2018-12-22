@@ -71,8 +71,7 @@
             <?php $locId = old('location-id', $quest->quest_location_id ?? 0);?>
             @if(isset($locations))
                 @foreach($locations as $loc)
-                    <option @if($locId == $loc->id) selected @endif value="{{$loc->id}}">{{$loc->name}} ({{$loc->type}}
-                        )
+                    <option @if($locId == $loc->id) selected @endif value="{{$loc->id}}">{{$loc->name}} ({{$loc->type}})
                     </option>
                 @endforeach
             @endif

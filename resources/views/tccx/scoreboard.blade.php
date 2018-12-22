@@ -68,7 +68,7 @@
                         <form id="form-score-change" action="scoreboard/change" method="post">
                             {{csrf_field()}}
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Team</label>
+                                <label for="input-team">Team</label>
                                 <select id="input-team" name="team" class="custom-select form-control-sm">
                                     @foreach($teams->sortBy('score') as $team)
                                         <option @if(old('team',-1) == $team->id)
