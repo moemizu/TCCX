@@ -118,6 +118,6 @@ class Quest extends Model
 
     public function setTimeAttribute($value)
     {
-        $this->attributes['time'] = ['X' => 0, 'M' => 1, 'A' => 2][$value] ?? 0;
+        $this->attributes['time'] = ['X' => 0, 'M' => 1, 'A' => 2][$value] ?? $value ?? 0;
     }
 }

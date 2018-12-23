@@ -20,9 +20,10 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Code</th>
-                                <th scope="col">Difficulty</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Time</th>
                                 <th scope="col">Location</th>
+                                <th scope="col">Difficulty</th>
                                 <!--<th scope="col">Instruction</th>-->
                                 <th scope="col">Reward</th>
                                 <th class="text-nowrap" scope="col">Status</th>
@@ -38,25 +39,27 @@
                                     <th scope="row">{{$quest->id}}</th>
                                     <td><a href="/quest/view/{{$qc->generate($quest)}}"
                                            target="_blank">{{$quest->name}}</a></td>
-                                    <td>{{$qc->generate($quest)}}</td>
-                                    <td>{{ucfirst($quest->difficulty)}}</td>
+                                    <td>{{optional($quest->quest_type)->name}}</td>
+                                    <td>{{[0 => 'N/A',1 => 'Morning',2 => 'Afternoon'][$quest->getOriginal('time')] ?? ''}}</td>
                                     <td>@if(isset($quest->quest_location))
-                                            {{$quest->quest_location->name}}
+                                            {{$quest->quest_location->name}} @if(isset($quest->quest_zone))
+                                                ({{$quest->quest_zone->name}})@endif
                                         @else <span
                                                     class="text-muted font-italic">Unspecified</span>
                                         @endif
                                     </td>
+                                    <td>{{ucfirst($quest->difficulty)}}</td>
                                 <!--<td>{{str_limit(strip_tags($pd->parse($quest->how_to)),50)}}</td>-->
                                     <td>{{$quest->reward}}</td>
-                                    <td class="text-muted">
+                                    <td>
                                         {{-- If quest has been assigned --}}
                                         @if(!empty($quest->assignedTo()))
                                             @if($quest->isCompleted())
-                                                Completed on {{$quest->assignedTo()->pivot->completed_at}}
-                                                by {{$quest->assignedTo()->name}}
+                                                <span class="text-success">Completed on {{$quest->assignedTo()->pivot->completed_at}}
+                                                    by {{$quest->assignedTo()->name}}</span>
                                             @else
-                                                Assigned to {{$quest->assignedTo()->name ?? 'None'}}
-                                                on {{$quest->assignedTo()->pivot->assigned_at}}
+                                                <span class="text-muted">Assigned to {{$quest->assignedTo()->name ?? 'None'}}
+                                                    on {{$quest->assignedTo()->pivot->assigned_at}}</span>
                                             @endif
                                         @endif
                                     </td>

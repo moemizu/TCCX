@@ -1,22 +1,41 @@
 <h5><i class="fas fa-pencil-alt"></i> General</h5>
 <input type="hidden" name="id" value="{{old('id',$quest->id ?? '')}}">
+<input type="hidden" name="last-page" value="{{old('last-page', request('last_page'))}}">
 <!-- Name/order group -->
 <div class="form-row">
-    <div class="form-group col-md-8 col-sm-8">
+    <div class="form-group col-md-6 col-sm-6">
         <label class="col-form-label" for="input-name">Name</label>
         <input required type="text" class="form-control" id="input-name" name="name"
                placeholder="Name" autocomplete="off" value="{{old('name',$quest->name ?? '')}}">
     </div>
-    <div class="form-group col-md-4 col-sm-4">
+    <div class="form-group col-md-3 col-sm-3">
         <label class="col-form-label" for="input-order">Order</label>
         <input required type="number" min="0" max="999" class="form-control"
                id="input-order" name="order"
                placeholder="Order" value="{{old('order',$quest->order ?? '')}}">
     </div>
+    <div class="form-group col-md-3 col-sm-3">
+        <label class="col-form-label" for="input-order">Group</label>
+        <input required type="number" min="0" max="999" class="form-control"
+               id="input-group" name="group"
+               placeholder="Group" value="{{old('group',$quest->group ?? 0)}}">
+    </div>
 </div>
-<!-- Type/zone/difficulty group -->
+<!-- Type/zone group -->
 <div class="form-row">
-    <div class="form-group col-md-4 col-sm-4">
+    <div class="form-group col-md-3 col-sm-4">
+        <label class="col-form-label" for="input-order">Time</label>
+        <select id="input-time" name="time" class="custom-select">
+            {{-- Default to side quest --}}
+            @if(isset($times))
+                @foreach($times as $timeName => $value)
+                    <option @if($value == old('time',optional($quest ?? null)->getOriginal('time') ?? 0)) selected
+                            @endif value="{{$value}}">{{$timeName}}</option>
+                @endforeach
+            @endif
+        </select>
+    </div>
+    <div class="form-group col-md-3 col-sm-4">
         <label class="col-form-label" for="input-type">Type</label>
         <select id="input-type" name="type" class="custom-select">
             {{-- Default to side quest --}}
@@ -28,18 +47,23 @@
             @endif
         </select>
     </div>
-    <div class="form-group col-md-4 col-sm-4">
+    <div class="form-group col-md-3 col-sm-4">
         <label class="col-form-label" for="input-zone">Zone</label>
         <select id="input-zone" name="zone" class="custom-select">
             @if(isset($zones))
                 @foreach($zones as $zone)
-                    <option @if($zone->id == old('zone',$quest->quest_zone_id ?? 1)) selected
+                    <option @if($zone->id == old('zone',$quest->quest_zone_id ?? null)) selected
                             @endif value="{{$zone->id}}">{{$zone->name}}</option>
                 @endforeach
+                <option value="" @if(old('zone',$quest->quest_zone_id ?? null) == null) selected @endif>Unspecified
+                </option>
             @endif
         </select>
     </div>
-    <div class="form-group col-md-2 col-sm-2">
+</div>
+<!-- Difficulty/Reward group -->
+<div class="form-row">
+    <div class="form-group col-md-3 col-sm-4">
         <label class="col-form-label" for="input-zone">Difficulty</label>
         <select id="input-difficulty" name="difficulty" class="custom-select">
             @if(isset($difficulties))
@@ -51,11 +75,11 @@
             @endif
         </select>
     </div>
-    <div class="form-group col-md-2 col-sm-2">
+    <div class="form-group col-md-3 col-sm-4">
         <label class="col-form-label" for="input-reward">Reward</label>
         <input required type="number" min="0" class="form-control"
                id="input-reward" name="reward"
-               placeholder="Reward" value="{{old('reward',$quest->reward ?? '')}}">
+               placeholder="Reward" value="{{old('reward',$quest->reward ?? 200)}}">
     </div>
 </div>
 <!-- Location -->
