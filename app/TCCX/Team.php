@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereScore($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\TCCX\Criterion[] $criteria
  */
 class Team extends Model
 {
@@ -37,6 +38,13 @@ class Team extends Model
     {
         return $this->belongsToMany(Quest::class)
             ->withPivot('assigned_at', 'completed_at', 'note')
+            ->withTimestamps();
+    }
+
+    public function criteria()
+    {
+        return $this->belongsToMany(Criterion::class, 'team_criterion')->as('score')
+            ->withPivot('value')
             ->withTimestamps();
     }
 }
