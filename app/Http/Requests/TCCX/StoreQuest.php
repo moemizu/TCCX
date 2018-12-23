@@ -3,6 +3,7 @@
 namespace App\Http\Requests\TCCX;
 
 
+use App\BooleanChain;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Fluent;
 use Illuminate\Validation\Rule;
@@ -32,14 +33,16 @@ class StoreQuest extends FormRequest
             // general
             'name' => 'required|string',
             'order' => 'required|integer|',
+            'time' => 'required|integer|in:0,1,2',
+            'group' => 'required|integer',
             'type' => 'required|integer|exists:quest_types,id',
-            'zone' => 'required|integer|exists:quest_zones,id',
             'difficulty' => ['required', Rule::in('Easy', 'Normal', 'Hard')],
             // details
             'story' => 'present|string|nullable',
             'how-to' => 'required|string',
             'criteria' => 'required|string',
-            'editorial' => 'present|string|nullable'
+            'editorial' => 'present|string|nullable',
+            'last-page' => 'present|integer|nullable'
         ];
     }
 
@@ -57,9 +60,14 @@ class StoreQuest extends FormRequest
         $validator->sometimes('location-id', 'required|exists:quest_locations,id', function (Fluent $input) {
             if ($input->get('edit', 0)) {
                 return true;
+            } // if location is null then don't validate
+            else if (empty($input->get('location-id'))) {
+                return false;
             }
-            return empty($input->get('location-name')) && empty($input->get('location-type')) &&
-                empty($input->get('location-lat')) && empty($input->get('location-lng'));
+            // everything must be empty
+            // doesn't happen in most case
+            else
+                return $this->emptyInputChain($input, ['location-name', 'location-type'], true, false);
         });
         // location rules
         // every field is required unless location id field is present
@@ -74,10 +82,17 @@ class StoreQuest extends FormRequest
                 if ($input->get('edit', 0)) {
                     return false;
                 } else {
-                    return empty($input->get('location-id'));
+                    if (empty($input->get('location-id')))
+                        return false;
+                    else
+                        return $this->emptyInputChain($input, ['location-name', 'location-type']);
                 }
             });
         }
+        // zone rules
+        $validator->sometimes('zone', 'required|integer|exists:quest_zones,id', function (Fluent $input) {
+            return !empty($input->get('zone'));
+        });
     }
 
     /**
@@ -97,5 +112,12 @@ class StoreQuest extends FormRequest
             'location-lng.regex' => 'Invalid pattern for longitude',
 
         ];
+    }
+
+    private function emptyInputChain(Fluent $input, $keys = [], $start = false, $or = true)
+    {
+        return (new BooleanChain(function (Fluent $input, $key) {
+            return empty($input->get($key));
+        }, $input))->evaluate($keys, $start, $or);
     }
 }

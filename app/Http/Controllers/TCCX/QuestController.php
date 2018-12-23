@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TCCX;
 
+use App\BooleanChain;
 use App\Http\Requests\TCCX\AssignQuest;
 use App\Http\Requests\TCCX\FinishQuest;
 use App\Http\Requests\TCCX\StoreQuest;
@@ -15,7 +16,6 @@ use Illuminate\Contracts\Foundation\Application;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Log;
 class QuestController extends Controller
 {
     private $difficulties;
+    private $times;
     /**
      * @var \Illuminate\Contracts\Foundation\Application $app ;
      */
@@ -32,7 +33,7 @@ class QuestController extends Controller
 
     /**
      * QuestController constructor.
-     * @param App $app
+     * @param Application $app
      */
     public function __construct(Application $app)
     {
@@ -40,6 +41,11 @@ class QuestController extends Controller
             'Easy' => 100,
             'Normal' => 200,
             'Hard' => 300
+        ];
+        $this->times = [
+            'N/A' => 0,
+            'Morning' => 1,
+            'Afternoon' => 2,
         ];
         $this->app = $app;
     }
@@ -78,7 +84,7 @@ class QuestController extends Controller
         $this->updateQuestModel(new Quest(), $request);
         // return success response
         return redirect()
-            ->route('tccx.quest.quests')
+            ->route('tccx.quest.quests', ['page' => $request->get('last-page')])
             ->with('status', [
                 'type' => 'success',
                 'message' => 'Quest created!'
@@ -137,7 +143,7 @@ class QuestController extends Controller
         $quest = Quest::whereId($request->get('id'))->firstOrFail();
         $this->updateQuestModel($quest, $request);
         return redirect()
-            ->route('tccx.quest.quests')
+            ->route('tccx.quest.quests', ['page' => $request->get('last-page')])
             ->with('status', [
                 'type' => 'success',
                 'message' => 'Quest updated!'
@@ -148,6 +154,7 @@ class QuestController extends Controller
      * Delete a quest
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function deleteQuest(Request $request)
     {
@@ -221,9 +228,13 @@ class QuestController extends Controller
         // basic
         $quest->name = $request->get('name');
         $quest->order = $request->get('order');
+        // group and time
+        $quest->time = $request->get('time');
+        $quest->group = $request->get('group');
         // zone
         $questZone = QuestZone::whereId($request->get('zone'))->first();
-        $quest->quest_zone()->associate($questZone);
+        if (isset($questZone))
+            $quest->quest_zone()->associate($questZone);
         // type
         $questType = QuestType::whereId($request->get('type'))->first();
         $quest->quest_type()->associate($questType);
@@ -232,21 +243,27 @@ class QuestController extends Controller
         $quest->reward = $request->get('reward', $this->difficulties[$quest->difficulty]);
         $quest->multiple_team = $questType->name == 'Contest';
         // location
-        $LocationId = $request->get('location-id');
-        if (!empty($LocationId)) {
+        $locationId = $request->get('location-id');
+        if (!empty($locationId)) {
             // use location id
-            $quest->quest_location()->associate(QuestLocation::whereId($LocationId)->first());
+            $quest->quest_location()->associate(QuestLocation::whereId($locationId)->first());
         } else {
-            // create new location
-            $location = new QuestLocation();
-            $location->name = $request->get('location-name');
-            $location->type = $request->get('location-type');
-            $location->lat = $request->get('location-lat');
-            $location->lng = $request->get('location-lng');
-            // save
-            $location->save();
-            // associate with the quest
-            $quest->quest_location()->associate($location);
+            $test = new BooleanChain(function (Request $request, $key) {
+                return empty($request->get($key));
+            }, $request);
+            // if everything is not empty
+            if (!$test->evaluate(['location-name', 'location-type', 'location-lat', 'location-lng'])) {
+                // create new location
+                $location = new QuestLocation();
+                $location->name = $request->get('location-name');
+                $location->type = $request->get('location-type');
+                $location->lat = $request->get('location-lat');
+                $location->lng = $request->get('location-lng');
+                // save
+                $location->save();
+                // associate with the quest
+                $quest->quest_location()->associate($location);
+            }
         }
         // details
         // don't parse markdown
@@ -270,7 +287,7 @@ class QuestController extends Controller
         $locations = QuestLocation::orderBy('name')->get();
         return [
             'types' => $types, 'zones' => $zones, 'locations' => $locations,
-            'difficulties' => $this->difficulties
+            'difficulties' => $this->difficulties, 'times' => $this->times
         ];
     }
 
