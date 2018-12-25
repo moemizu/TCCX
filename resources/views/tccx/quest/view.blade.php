@@ -32,10 +32,10 @@
         <!-- general details -->
         <dl class="row text-quest-details m-2">
             <dt class="col-sm-2">Type</dt>
-            <dd class="col-sm-10">{{$quest->quest_type->name}}</dd>
+            <dd class="col-sm-10">{{$quest->quest_type->name ?? 'Unspecified'}}</dd>
 
             <dt class="col-sm-2">Zone</dt>
-            <dd class="col-sm-10">{{$quest->quest_zone->name}}</dd>
+            <dd class="col-sm-10">{{$quest->quest_zone->name ?? 'Unspecified'}}</dd>
 
             <dt class="col-sm-2">Location</dt>
             <dd class="col-sm-10">

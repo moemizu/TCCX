@@ -53,8 +53,8 @@ class QuestCode
         $order = substr($code, 5);
         // transform
         $time = ['x' => 0, 'm' => 1, 'a' => 2][$time] ?? 0;
-        $zone = $zones->where('code', $zone)->first()->id ?? 'X';
-        $type = $types->where('code', $type)->first()->id ?? 'X';
+        $zone = $zones->where('code', $zone)->first()->id ?? null;
+        $type = $types->where('code', $type)->first()->id ?? null;
         $group = (int)$group;
         $order = (int)$order;
         return [
