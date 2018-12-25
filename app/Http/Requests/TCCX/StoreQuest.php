@@ -36,7 +36,7 @@ class StoreQuest extends FormRequest
             'time' => 'required|integer|in:0,1,2',
             'group' => 'required|integer',
             'type' => 'required|integer|exists:quest_types,id',
-            'difficulty' => ['required', Rule::in('Easy', 'Normal', 'Hard')],
+            'difficulty' => ['required'],
             // details
             'story' => 'present|string|nullable',
             'how-to' => 'required|string',
