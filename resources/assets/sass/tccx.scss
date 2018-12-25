@@ -35,3 +35,40 @@ $quest-dialog-duration: 160ms;
     font-size: 1.5em;
   }
 }
+
+.page-break {
+  page-break-after: always;
+}
+
+// Thai font
+@font-face {
+  font-family: 'TH Sarabun New';
+  font-style: normal;
+  font-weight: normal;
+  //noinspection CssUnknownTarget
+  src: url("/fonts/THSarabunNew.ttf");
+}
+
+@font-face {
+  font-family: 'TH Sarabun New';
+  font-style: normal;
+  font-weight: bold;
+  //noinspection CssUnknownTarget
+  src: url("/fonts/THSarabunNew Bold.ttf");
+}
+
+@font-face {
+  font-family: 'TH Sarabun New';
+  font-style: italic;
+  font-weight: normal;
+  //noinspection CssUnknownTarget
+  src: url("/fonts/THSarabunNew Italic.ttf");
+}
+
+@font-face {
+  font-family: 'TH Sarabun New';
+  font-style: italic;
+  font-weight: bold;
+  //noinspection CssUnknownTarget
+  src: url("/fonts/THSarabunNew BoldItalic.ttf");
+}
