@@ -1,7 +1,11 @@
 @extends('layouts.base')
 
 @section('title')
-    Quest
+    @if(count($quests) > 1)
+        Quests
+    @else
+        {{$quests[0]->name ?? 'Quest'}}
+    @endif
 @endsection
 
 @section('content')
