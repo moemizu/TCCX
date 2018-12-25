@@ -59,7 +59,7 @@ class StoreQuest extends FormRequest
         // for edit mode, this is required
         $validator->sometimes('location-id', 'required|exists:quest_locations,id', function (Fluent $input) {
             if ($input->get('edit', 0)) {
-                return true;
+                return !empty($input->get('location-id'));
             } // if location is null then don't validate
             else if (empty($input->get('location-id'))) {
                 return false;
