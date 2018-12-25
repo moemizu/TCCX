@@ -22,8 +22,9 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Time</th>
+                                <th scope="col">Group</th>
                                 <th scope="col">Location</th>
-                                <th scope="col">Difficulty</th>
+                                <th scope="col">Level</th>
                                 <!--<th scope="col">Instruction</th>-->
                                 <th scope="col">Reward</th>
                                 <th class="text-nowrap" scope="col">Status</th>
@@ -39,8 +40,9 @@
                                     <th scope="row">{{$quest->id}}</th>
                                     <td><a href="/quest/view/{{$qc->generate($quest)}}"
                                            target="_blank">{{$quest->name}}</a></td>
-                                    <td>{{optional($quest->quest_type)->name}}</td>
-                                    <td>{{[0 => 'N/A',1 => 'Morning',2 => 'Afternoon'][$quest->getOriginal('time')] ?? ''}}</td>
+                                    <td>{{optional($quest->quest_type)->code}}</td>
+                                    <td>{{[0 => 'N/A',1 => 'M',2 => 'A'][$quest->getOriginal('time')] ?? ''}}</td>
+                                    <td>{{$quest->group}}</td>
                                     <td>@if(isset($quest->quest_location))
                                             {{$quest->quest_location->name}} @if(isset($quest->quest_zone))
                                                 ({{$quest->quest_zone->name}})@endif

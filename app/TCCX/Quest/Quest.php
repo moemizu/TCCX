@@ -50,6 +50,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $group
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereGroup($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereTime($value)
+ * @property string $material
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereMaterial($value)
  */
 class Quest extends Model
 {

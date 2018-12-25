@@ -110,7 +110,12 @@ class QuestController extends Controller
             ->where('group', $parsedQuestCode['group'])
             ->where('difficulty', $parsedQuestCode['difficulty'])
             ->firstOrFail();
-        return view('tccx.quest.view', ['quest' => $quest]);
+        return view('tccx.quest.view2', ['quests' => [$quest]]);
+    }
+
+    public function getAllQuest()
+    {
+        return view('tccx.quest.view2', ['quests' => Quest::all()]);
     }
 
     /**
