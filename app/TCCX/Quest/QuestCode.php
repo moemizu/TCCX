@@ -10,7 +10,8 @@ namespace App\TCCX\Quest;
  * 1 -> Siam(S) or Rattanakosin(R)
  * 2 -> Main(M) or Side(S) or Lunch(L) or Contest(C)
  * 3 -> 00 for unspecified, 01 to 12 for group 1 to 12
- * 4 -> 01 - 99 (12,22,32,42 reserved for main, lunch)
+ * 4 -> 01 - 99 item no
+ * 5 -> 0 - 4 level(difficulty)
  * @package App\TCCX\Quest
  *
  */
@@ -27,9 +28,10 @@ class QuestCode
         $type = optional($quest->quest_type)->code ?? 'X';
         $zone = optional($quest->quest_zone)->code ?? 'X';
         $number = sprintf('%02d', $quest->order);
+        $level = $quest->difficulty;
         $time = $quest->time;
         $group = sprintf('%02d', $quest->group);
-        return strtoupper($time . $zone . $type . $group . $number);
+        return strtoupper($time . $zone . $type . $group . $number . $level);
     }
 
     /**
@@ -50,19 +52,23 @@ class QuestCode
         $zone = substr($code, 1, 1);
         $type = substr($code, 2, 1);
         $group = substr($code, 3, 2);
-        $order = substr($code, 5);
+        $orderAndLevel = substr($code, 5);
+        $level = substr($orderAndLevel, strlen($orderAndLevel) - 1, 1);
+        $order = substr($orderAndLevel, 0, strlen($orderAndLevel) - 1);
         // transform
         $time = ['x' => 0, 'm' => 1, 'a' => 2][$time] ?? 0;
         $zone = $zones->where('code', $zone)->first()->id ?? null;
         $type = $types->where('code', $type)->first()->id ?? null;
         $group = (int)$group;
         $order = (int)$order;
+        $level = (int)$level;
         return [
             'time' => $time,
             'zone' => $zone,
             'type' => $type,
             'group' => $group,
-            'order' => $order
+            'order' => $order,
+            'difficulty' => $level
         ];
     }
 }

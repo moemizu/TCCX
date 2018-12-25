@@ -38,6 +38,7 @@ class QuestController extends Controller
     public function __construct(Application $app)
     {
         $this->difficulties = [
+            '0' => 0,
             '1' => 100,
             '2' => 200,
             '3' => 300,
@@ -107,6 +108,7 @@ class QuestController extends Controller
             ->where('quest_zone_id', $parsedQuestCode['zone'])
             ->where('time', $parsedQuestCode['time'])
             ->where('group', $parsedQuestCode['group'])
+            ->where('difficulty', $parsedQuestCode['difficulty'])
             ->firstOrFail();
         return view('tccx.quest.view', ['quest' => $quest]);
     }
