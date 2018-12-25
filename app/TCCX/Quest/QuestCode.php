@@ -24,8 +24,8 @@ class QuestCode
      */
     public function generate(Quest $quest)
     {
-        $type = optional($quest->quest_type)->code ?? '';
-        $zone = optional($quest->quest_zone)->code ?? '';
+        $type = optional($quest->quest_type)->code ?? 'X';
+        $zone = optional($quest->quest_zone)->code ?? 'X';
         $number = sprintf('%02d', $quest->order);
         $time = $quest->time;
         $group = sprintf('%02d', $quest->group);
@@ -53,8 +53,8 @@ class QuestCode
         $order = substr($code, 5);
         // transform
         $time = ['x' => 0, 'm' => 1, 'a' => 2][$time] ?? 0;
-        $zone = $zones->where('code', $zone)->first()->id;
-        $type = $types->where('code', $type)->first()->id;
+        $zone = $zones->where('code', $zone)->first()->id ?? 'X';
+        $type = $types->where('code', $type)->first()->id ?? 'X';
         $group = (int)$group;
         $order = (int)$order;
         return [
