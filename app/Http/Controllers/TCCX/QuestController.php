@@ -38,9 +38,10 @@ class QuestController extends Controller
     public function __construct(Application $app)
     {
         $this->difficulties = [
-            'Easy' => 100,
-            'Normal' => 200,
-            'Hard' => 300
+            '1' => 100,
+            '2' => 200,
+            '3' => 300,
+            '4' => 400
         ];
         $this->times = [
             'N/A' => 0,
