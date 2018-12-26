@@ -7,29 +7,42 @@
     <!-- Main container -->
     <div class="container">
         <div class="row"><!-- Table -->
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <!-- Main Scoreboard Display -->
                 <div id="scoreboard" class="card my-2">
                     <h5 class="card-header"><i class="fas fa-star"></i> Scoreboard</h5>
                     <div class="card-body">
-                        <table class="mt-3 table table-hover table-sm">
+                        <table class="mt-3 table table-hover table-sm table-bordered">
                             <thead class="w-100">
                             <tr>
-                                <th scope="col">#</th>
-                                <th class="sorting" scope="col">
+                                <th class="align-middle" rowspan="2" scope="col">#</th>
+                                <th rowspan="2" class="sorting align-middle" scope="col">
                                     <a href="{{ route('tccx.scoreboard',
                                     ['sort' => $sorting->inv('name')])}}">
-                                        Team Name <span class="float-right">
+                                        Team <span class="float-right">
                                             <i class="fas fa-{{$sorting->dir('name',['sort-up','sort-down','sort'])}}">
                                             </i></span></a>
                                 </th>
-                                <th class="sorting" scope="col"><a href="{{ route('tccx.scoreboard',
+                                <th rowspan="2" class="sorting align-middle" scope="col"><a href="{{ route('tccx.scoreboard',
                                     ['sort' => $sorting->inv('score')])}}">
                                         Score <span class="float-right">
                                             <i class="fas fa-{{$sorting->dir('score',['sort-up','sort-down','sort'])}}">
                                             </i></span></a>
                                 </th>
-                                <th scope="col">Last Action</th>
+                                @foreach($scoreboard['head'] as $subjectBag)
+                                    <th colspan="{{count($subjectBag['criteria'])}}"
+                                        @if(count($subjectBag['criteria']) <= 1)
+                                        rowspan="2"
+                                        @endif
+                                        class="text-center align-middle">{{$subjectBag['subject']->name}}</th>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                @foreach($scoreboard['head'] as $subjectBag)
+                                    @foreach($subjectBag['criteria'] as $criterion)
+                                        <th class="text-center">{{$criterion->name}}</th>
+                                    @endforeach
+                                @endforeach
                             </tr>
                             </thead>
                             <tbody class="w-100">
@@ -37,8 +50,15 @@
                                 <tr>
                                     <th scope="row">{{$loop->iteration}}</th>
                                     <td>{{$team->name}}</td>
-                                    <td>{{$team->score}}</td>
-                                    <td>...</td>
+                                    <td>{{$scoreboard['body'][$team->id]['sum']}}</td>
+                                    @foreach($scoreboard['head'] as $subjectId => $subjectBag)
+                                        @if(count($subjectBag['criteria']) < 1)
+                                            <td class="text-center">0</td>
+                                        @endif
+                                        @foreach($subjectBag['criteria'] as $criterionId => $criterion)
+                                            <td class="text-center">{{$scoreboard['body'][$team->id][$subjectId][$criterionId]}}</td>
+                                        @endforeach
+                                    @endforeach
                                 </tr>
                             @endforeach
                             </tbody>
