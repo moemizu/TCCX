@@ -39,6 +39,7 @@ class StoreQuest extends FormRequest
             'difficulty' => ['required'],
             // details
             'story' => 'present|string|nullable',
+            'material' => 'present|string|nullable',
             'how-to' => 'required|string',
             'criteria' => 'required|string',
             'editorial' => 'present|string|nullable',

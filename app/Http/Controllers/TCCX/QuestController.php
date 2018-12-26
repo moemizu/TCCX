@@ -275,6 +275,7 @@ class QuestController extends Controller
         }
         // details
         // don't parse markdown
+        $quest->material = $request->get('material', '');
         $quest->story = $request->get('story', '');
         $quest->how_to = $request->get('how-to', '');
         $quest->criteria = $request->get('criteria', '');

@@ -139,6 +139,11 @@
 <!-- Details -->
 <h5><i class="fas fa-info-circle"></i> Details</h5>
 <div class="form-group">
+    <label for="input-material">Material</label>
+    <textarea class="form-control" id="input-material" name="material"
+              rows="1">{{old('material',$quest->material ?? '')}}</textarea>
+</div>
+<div class="form-group">
     <label for="input-story">Story</label>
     <textarea class="form-control" id="input-story" name="story"
               rows="5">{{old('story',$quest->story ?? '')}}</textarea>
