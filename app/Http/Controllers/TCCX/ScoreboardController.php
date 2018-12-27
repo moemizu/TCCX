@@ -4,12 +4,12 @@ namespace App\Http\Controllers\TCCX;
 
 use App\Http\Requests\TCCX\SubmitScore;
 use App\SortingRule;
+use App\TCCX\Criterion;
 use App\TCCX\Subject;
 use App\TCCX\Team;
 use App\UserSorting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Collection;
 
 class ScoreboardController extends Controller
 {
@@ -112,12 +112,25 @@ class ScoreboardController extends Controller
         } else {
             $teams[] = Team::whereId($request->get('team'))->first();
         }
+        // criterion
+        $criterion = null;
+        if (!empty($request->get('criterion')))
+            $criterion = Criterion::whereId($request->get('criterion'))->first();
         // score
         $score = $request->get('score');
         // for every team (or selected one)
         foreach ($teams as $team) {
             // new score
-            $team->score = $team->score + $score;
+            if (empty($criterion)) {
+                $team->score = $team->score + $score;
+            } else {
+                if ($team->criteria->contains($criterion->id)) {
+                    $oldScore = $team->criteria()->where('criteria.id', $criterion->id)->first()->score->value;
+                    $team->criteria()->updateExistingPivot($criterion, ['value' => $oldScore + $score]);
+                } else {
+                    $team->criteria()->attach($criterion, ['value' => $score]);
+                }
+            }
             // save
             $team->save();
         }
