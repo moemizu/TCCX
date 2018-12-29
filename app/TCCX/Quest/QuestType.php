@@ -2,6 +2,7 @@
 
 namespace App\TCCX\Quest;
 
+use App\TCCX\Criterion;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,5 +28,10 @@ class QuestType extends Model
     public function quests()
     {
         return $this->hasMany(Quest::class, 'quest_type_id');
+    }
+
+    public function criteria()
+    {
+        return $this->belongsToMany(Criterion::class, 'quest_type_criterion');
     }
 }

@@ -54,11 +54,13 @@ class QuestController extends Controller
 
     /**
      * Index page
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $quests = Quest::with('quest_type', 'quest_zone', 'quest_location')->paginate(10);
+        $query = Quest::with('quest_type', 'quest_zone', 'quest_location');
+        $quests = $query->paginate(10);
         $teams = Team::all();
         return view('tccx.quest.quests', ['quests' => $quests, 'teams' => $teams]);
     }
@@ -216,8 +218,21 @@ class QuestController extends Controller
         // mark for completion
         $quest->teams()->updateExistingPivot($team, ['note' => $note, 'completed_at' => Carbon::now()]);
         $qc = $this->app->make('App\TCCX\Quest\QuestCode');
+        $score = $quest->reward;
         // reward team
-        $team->score = $team->score + $quest->reward;
+        if (!empty($quest->quest_type)) {
+            $criterion = $quest->quest_type->criteria()->where('time', $quest->getOriginal('time'))->first();
+            if (!empty($criterion)) {
+                /** @var Team $team */
+                // TODO: duplicated code
+                if ($team->criteria->contains($criterion->id)) {
+                    $oldScore = $team->criteria()->where('criteria.id', $criterion->id)->first()->score->value;
+                    $team->criteria()->updateExistingPivot($criterion, ['value' => $oldScore + $score]);
+                } else {
+                    $team->criteria()->attach($criterion, ['value' => $score]);
+                }
+            }
+        }
         $team->save();
         return back()->with('status', [
             'type' => 'success',

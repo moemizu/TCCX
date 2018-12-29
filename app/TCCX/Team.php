@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Team whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\TCCX\Criterion[] $criteria
+ * @property-read \App\TCCX\Quest\QuestTracking $tracking
  */
 class Team extends Model
 {
@@ -46,5 +47,10 @@ class Team extends Model
         return $this->belongsToMany(Criterion::class, 'team_criterion')->as('score')
             ->withPivot('value')
             ->withTimestamps();
+    }
+
+    public function tracking()
+    {
+        return $this->hasOne('App\TCCX\Quest\QuestTracking');
     }
 }

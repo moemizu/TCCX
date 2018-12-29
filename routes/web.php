@@ -55,6 +55,8 @@ Route::get('/quest/location/edit', 'TCCX\QuestLocationController@edit')->name('t
 Route::post('/quest/location/edit', 'TCCX\QuestLocationController@editPost');
 // delete
 Route::post('/quest/location/delete', 'TCCX\QuestLocationController@delete');
+// tracking
+Route::get('/quest/tracking', 'TCCX\QuestTrackingController@index');
 
 //Route::get('/quest/zones','')->name('tccx.quests.locations');
 

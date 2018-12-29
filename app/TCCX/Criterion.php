@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Criterion whereSubjectId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Criterion whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $order
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Criterion whereOrder($value)
  */
 class Criterion extends Model
 {

@@ -10,11 +10,15 @@
                 @include('tccx.shared.status')
                 @include('tccx.shared.errors')
                 <div id="quest-list" class="card m-2">
-                    <h5 class="card-header"><i class="fas fa-list-alt"></i> Quest List</h5>
+                    <div class="card-header">
+                        <div class="row ml-1">
+                            <h5><i class="fas fa-list-alt"></i> Quest List</h5>
+                            <a class="btn btn-primary btn-sm d-print-none ml-3" href="/quest/create" role="button">
+                                <i class="fas fa-plus"></i> Create
+                            </a>
+                        </div>
+                    </div>
                     <div class="card-body">
-                        <a class="btn btn-primary d-print-none" href="/quest/create" role="button">
-                            <i class="fas fa-plus"></i> Create
-                        </a>
                         <table class="mt-3 table table-responsive table-hover">
                             <thead>
                             <tr>
@@ -136,7 +140,6 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p class="text-info">Please select a team</p>
                                         <form id="form-assign-quest" method="post" action="/quest/assign">
                                             {{csrf_field()}}
                                             <input type="hidden" id="input-assign-quest" name="quest-id" value="">
@@ -145,6 +148,7 @@
                                                     <option value="{{$team->id}}">{{$team->name}}</option>
                                                 @endforeach
                                             </select>
+                                            <label for="select-team" class="text-info">Please select a team</label>
                                         </form>
                                     </div>
                                     <div class="modal-footer">

@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Subject whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Subject whereWeight($value)
  * @mixin \Eloquent
+ * @property int $order
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Subject whereOrder($value)
  */
 class Subject extends Model
 {

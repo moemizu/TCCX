@@ -24,18 +24,10 @@
                     <div class="dropdown-menu" aria-labelledby="menu-quest">
                         <a class="dropdown-item" href="/quest">Quests</a>
                         <a class="dropdown-item" href="/quest/locations">Locations</a>
+                        <a class="dropdown-item" href="/quest/tracking">Tracking</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown"><a id="menu-people" class="nav-link dropdown-toggle" href="#"
-                                                 role="button"
-                                                 data-toggle="dropdown"
-                                                 aria-haspopup="true" aria-expanded="false"><i class="fas fa-users"></i>
-                        People</a>
-                    <div class="dropdown-menu" aria-labelledby="menu-people">
-                        <a class="dropdown-item" href="/people/teams">Team</a>
-                        <a class="dropdown-item" href="#">Member</a>
-                    </div>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="/gate-land"><i class="fas fa-trophy"></i> GATE Land</a>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -43,7 +35,6 @@
                 <!-- Authentication Links -->
                 @guest
                     <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                    <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
