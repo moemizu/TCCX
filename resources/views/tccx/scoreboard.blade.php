@@ -79,19 +79,6 @@
                 <div id="scoreboard-change" class="card my-2">
                     <h5 class="card-header"><i class="fas fa-wrench"></i> Increase/Decrease Score</h5>
                     <div class="card-body">
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li style="font-size: 0.9em">{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-
                         <form id="form-score-change" action="scoreboard/change" method="post">
                             {{csrf_field()}}
                             <div class="form-row">
@@ -137,9 +124,11 @@
                                         score
                                     </small>
                                 </div>
+                                <div class="form-group form-inline col-md-3">
+                                    <button id="score-change-submit" type="submit" class="btn btn-primary">Submit
+                                    </button>
+                                </div>
                             </div>
-                            <button id="score-change-submit" type="submit" class="btn btn-primary">Submit
-                            </button>
                         </form>
                     </div>
                 </div>

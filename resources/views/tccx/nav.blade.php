@@ -15,7 +15,7 @@
                 <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/scoreboard"><i class="fas fa-star"></i> Scoreboard</a>
                 </li>
-                <li class="nav-item dropdown"><a id="menu-quest" class="nav-link dropdown-toggle" href="/quest"
+                <li class="nav-item dropdown"><a id="menu-quest" class="nav-link dropdown-toggle" href="#"
                                                  role="button"
                                                  data-toggle="dropdown"
                                                  aria-haspopup="true" aria-expanded="false"><i
