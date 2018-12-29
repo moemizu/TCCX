@@ -10,6 +10,7 @@ use App\TCCX\Team;
 use App\UserSorting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class ScoreboardController extends Controller
 {
@@ -83,6 +84,7 @@ class ScoreboardController extends Controller
                 $subjectMax[$subjectId] = max($subjectMax[$subjectId], $subjectSum);
             }
         }
+        $orderedTeams = [];
         // calculate real score
         foreach ($teams as $team) {
             $data[$team->id]['sum'] = $team->score;
@@ -93,9 +95,15 @@ class ScoreboardController extends Controller
                 }
             }
             $data[$team->id]['sum'] = round($data[$team->id]['sum']);
+            $orderedTeams[] = ['sum' => $data[$team->id]['sum'], 'team' => $team];
         }
-
-        return ['head' => $subjectCriteria, 'body' => $data];
+        $collection = collect($orderedTeams)->sortByDesc('sum');
+        $collection->transform(function ($item) {
+            unset($item['sum']);
+            return $item;
+        });
+        $orderedTeams = $collection->flatten()->all();
+        return ['head' => $subjectCriteria, 'body' => $data, 'teams' => $orderedTeams];
     }
 
     /**

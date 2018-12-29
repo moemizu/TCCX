@@ -52,7 +52,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="w-100">
-                                @foreach($teams as $team)
+                                @foreach($scoreboard['teams'] as $team)
                                     <tr>
                                         <th scope="row">{{$loop->iteration}}</th>
                                         <td>{{$team->name}}</td>
