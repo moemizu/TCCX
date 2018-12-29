@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-md navbar-light navbar-tccx mb-3">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+            <img class="d-inline-block align-top" src="/storage/images/tccxlogo.png" width="32" height="32" alt="TCCX">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
