@@ -7,6 +7,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                @include('tccx.shared.status')
+                @include('tccx.shared.errors')
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div id="tracking" class="card my-2">
                     <h5 class="card-header"><i class="fas fa-info-circle"></i> Tracking</h5>
                     <div class="card-body">
@@ -102,6 +108,129 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Tools -->
+        <div class="row">
+            <!-- Group -->
+            <div class="col-md-4 my-2">
+                <div class="card">
+                    <h5 class="card-header"><i class="fas fa-wrench"></i> Set Group</h5>
+                    <div class="card-body">
+                        <form id="form-set-group" method="post" action="/quest/tracking/set-group">
+                            {{csrf_field()}}
+                            <div class="form-group row">
+                                <label for="input-team" class="col-sm-4 col-form-label">Team</label>
+                                <div class="col-sm-8">
+                                    <select id="input-team" name="team" class="custom-select form-control">
+                                        @foreach($teams->sortBy('score') as $team)
+                                            <option @if(old('team',-1) == $team->id)
+                                                    selected
+                                                    @endif
+                                                    value="{{$team->id}}">{{$team->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="input-group" class="col-sm-4 col-form-label">Group</label>
+                                <div class="col-sm-8">
+                                    <input name="group" type="number" min="1" class="form-control" id="input-group"
+                                           placeholder="Group No.">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8 offset-sm-4">
+                                    <button type="submit" class="btn btn-primary">Set</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Item -->
+            <div class="col-md-4 my-2">
+                <div class="card">
+                    <h5 class="card-header"><i class="fas fa-wrench"></i> Give Item</h5>
+                    <div class="card-body">
+                        <form id="form-set-group" method="post" action="/quest/tracking/set-item">
+                            {{csrf_field()}}
+                            <div class="form-group row">
+                                <label for="input-team" class="col-sm-4 col-form-label">Team</label>
+                                <div class="col-sm-8">
+                                    <select id="input-team" name="team" class="custom-select form-control">
+                                        @foreach($teams as $team)
+                                            <option @if(old('team',-1) == $team->id)
+                                                    selected
+                                                    @endif
+                                                    value="{{$team->id}}">{{$team->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="input-item" class="col-sm-4 col-form-label">Item</label>
+                                <div class="col-sm-8">
+                                    <select id="input-item" name="item" class="custom-select form-control">
+                                        @foreach($items as $item)
+                                            <option @if(old('item',-1) == $item->id)
+                                                    selected
+                                                    @endif
+                                                    value="{{$item->id}}">{{$item->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8 offset-sm-4">
+                                    <button type="submit" class="btn btn-primary">Give</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Set used -->
+            <div class="col-md-4 my-2">
+                <div class="card">
+                    <h5 class="card-header"><i class="fas fa-wrench"></i> Set Item Status</h5>
+                    <div class="card-body">
+                        <form id="form-toggle-item" method="post" action="/quest/tracking/set-item">
+                            {{csrf_field()}}
+                            <div class="form-group row">
+                                <label for="input-team" class="col-sm-4 col-form-label">Team</label>
+                                <div class="col-sm-8">
+                                    <select id="input-team" name="team" class="custom-select form-control">
+                                        @foreach($teams as $team)
+                                            <option @if(old('team',-1) == $team->id)
+                                                    selected
+                                                    @endif
+                                                    value="{{$team->id}}">{{$team->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="input-used" class="col-sm-4 col-form-label">Used</label>
+                                <div class="col-sm-8">
+                                    <select id="input-used" name="used" class="custom-select form-control">
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8 offset-sm-4">
+                                    <button type="submit" class="btn btn-primary">Set</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

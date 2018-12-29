@@ -25,5 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class QuestItem extends Model
 {
-    //
+    public function tracking()
+    {
+        return $this->hasOne('App\TCCX\Quest\QuestTracking', 'item_id');
+    }
 }

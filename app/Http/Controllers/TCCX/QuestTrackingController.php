@@ -3,17 +3,58 @@
 namespace App\Http\Controllers\TCCX;
 
 use App\TCCX\Quest\Quest;
+use App\TCCX\Quest\QuestItem;
+use App\TCCX\Quest\QuestTracking;
 use App\TCCX\Quest\QuestType;
 use App\TCCX\Team;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class QuestTrackingController extends Controller
 {
     public function index()
     {
         $teams = Team::with('quests')->get();
+        $items = QuestItem::doesntHave('tracking')->get();
         $states = $this->buildQuestStates($teams);
-        return view('tccx.quest.tracking', ['teams' => $teams, 'states' => $states]);
+        return view('tccx.quest.tracking', ['teams' => $teams, 'states' => $states, 'items' => $items]);
+    }
+
+    public function setItem(Request $request)
+    {
+        $team = Team::whereId($request->get('team'))->firstOrFail();
+        $item = QuestItem::whereId($request->get('item'))->firstOrFail();
+        if (!$team->tracking()->exists()) {
+            $team->tracking()->save(new QuestTracking());
+        }
+        if ($team->tracking->item()->exists()) {
+            return back()->with('status', [
+                'type' => 'danger',
+                'message' => 'Team ' . $team->name . ' already has item'
+            ]);
+        }
+        $team->tracking->item()->associate($item);
+        $team->tracking->save();
+        return back()->with('status', [
+            'type' => 'success',
+            'message' => 'Item ' . $item->name . ' has been given to ' . $team->name . '!'
+        ]);
+
+    }
+
+    public function setGroup(Request $request)
+    {
+        $team = Team::whereId($request->get('team'))->firstOrFail();
+        $groupNo = $request->get('group');
+        if (!$team->tracking()->exists()) {
+            $team->tracking()->save(new QuestTracking());
+        }
+        $team->tracking->assigned_group = $groupNo;
+        $team->tracking->save();
+        return back()->with('status', [
+            'type' => 'success',
+            'message' => 'Group no. has been set!'
+        ]);
     }
 
     private function buildQuestStates($teams)
