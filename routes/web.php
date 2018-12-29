@@ -66,3 +66,6 @@ Route::get('/quest/tracking', 'TCCX\QuestTrackingController@index');
 
 // Team list
 Route::get('/people/teams', 'TCCX\TeamController@index')->name('tccx.people.teams');
+
+// GATE Land
+Route::get('/gate-land', 'TCCX\GateLandController@index')->name('tccx.gate_land');
