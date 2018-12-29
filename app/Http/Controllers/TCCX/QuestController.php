@@ -60,9 +60,22 @@ class QuestController extends Controller
     public function index(Request $request)
     {
         $query = Quest::with('quest_type', 'quest_zone', 'quest_location');
-        $quests = $query->paginate(10);
+        if (!empty($request->get('name')))
+            $query->where('name', 'LIKE', '%' . $request->get('name') . '%');
+        if ($request->get('group') != null)
+            $query->where('group', $request->get('group'));
+        if (!empty($request->get('type')))
+            $query->where('quest_type_id', $request->get('type'));
+        if (!empty($request->get('zone')))
+            $query->where('quest_zone_id', $request->get('zone'));
+        if (!empty($request->get('level')))
+            $query->where('difficulty', $request->get('level'));
+        if ($request->get('time') != null)
+            $query->where('time', $request->get('time'));
+        $query->orderBy('time', 'asc')->orderBy('quest_type_id')->orderBy('group')->orderBy('difficulty')->orderBy('name');
+        $quests = $query->select('quests.*')->paginate(10);
         $teams = Team::all();
-        return view('tccx.quest.quests', ['quests' => $quests, 'teams' => $teams]);
+        return view('tccx.quest.quests', array_merge(['quests' => $quests, 'teams' => $teams], $this->questSupportData()));
     }
 
     /**

@@ -19,6 +19,59 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <form id="quest-filter" method="get" action="{{route('tccx.quest.quests')}}">
+                            <div class="form-row">
+                                <div class="col-6 col-md-2 py-1">
+                                    <input type="text" name="name" class="form-control" placeholder="Name"
+                                           value="{{request('name')}}">
+                                </div>
+                                <div class="col-6 col-md-1 py-1">
+                                    <input type="number" min="0" name="group" class="form-control" placeholder="Group"
+                                           value="{{request('group')}}">
+                                </div>
+                                <div class="col-6 col-md-2 py-1">
+                                    <select id="input-type" name="type" class="custom-select">
+                                        <option value="">All types</option>
+                                        @if(isset($types))
+                                            @foreach($types as $type)
+                                                <option @if($type->id == request('type')) selected
+                                                        @endif value="{{$type->id}}">{{$type->name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col=6 col-md-2 py-1">
+                                    <select id="input-time" name="time" class="custom-select">
+                                        <option value="">All times</option>
+                                        @if(isset($times))
+                                            @foreach($times as $timeName => $value)
+                                                <option @if($value == request('time',-1)) selected
+                                                        @endif value="{{$value}}">{{$timeName}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col=6 col-md-2 py-1">
+                                    <select id="input-zone" name="zone" class="custom-select">
+                                        <option value="">All zones</option>
+                                        @if(isset($zones))
+                                            @foreach($zones as $zone)
+                                                <option @if($zone->id == request('zone')) selected
+                                                        @endif value="{{$zone->id}}">{{$zone->name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col-6 col-md-1 py-1">
+                                    <input type="number" min="0" max="4" name="level" class="form-control"
+                                           placeholder="Level"
+                                           value="{{request('level')}}">
+                                </div>
+                                <div class="col-6 col-md-2 py-1">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
                         <table class="mt-3 table table-responsive table-hover">
                             <thead>
                             <tr>
@@ -48,10 +101,12 @@
                                     <td>{{[0 => 'N/A',1 => 'M',2 => 'A'][$quest->getOriginal('time')] ?? ''}}</td>
                                     <td>{{$quest->group}}</td>
                                     <td>@if(isset($quest->quest_location))
-                                            {{$quest->quest_location->name}} @if(isset($quest->quest_zone))
-                                                ({{$quest->quest_zone->name}})@endif
+                                            {{$quest->quest_location->name}}
                                         @else <span
                                                     class="text-muted font-italic">Unspecified</span>
+                                        @endif
+                                        @if(isset($quest->quest_zone))
+                                            ({{$quest->quest_zone->name}})
                                         @endif
                                     </td>
                                     <td>{{ucfirst($quest->difficulty)}}</td>
