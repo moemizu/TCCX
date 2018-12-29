@@ -3,6 +3,7 @@
 <head>
     <!-- Site data -->
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" href="/storage/images/tccxlogo.png">
 
     <!-- Required meta tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -11,6 +12,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Additional -->
+    <meta name="theme-color" content="#6F677F"/>
 @stack('metadata')
 
 <!-- Styles -->

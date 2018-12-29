@@ -74,65 +74,70 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
-                <!-- Scoreboard Admin -->
-                <div id="scoreboard-change" class="card my-2">
-                    <h5 class="card-header"><i class="fas fa-wrench"></i> Increase/Decrease Score</h5>
-                    <div class="card-body">
-                        <form id="form-score-change" action="scoreboard/change" method="post">
-                            {{csrf_field()}}
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="input-team">Team</label>
-                                    <select id="input-team" name="team" class="custom-select form-control">
-                                        @foreach($teams->sortBy('score') as $team)
-                                            <option @if(old('team',-1) == $team->id)
-                                                    selected
-                                                    @endif
-                                                    value="{{$team->id}}">{{$team->name}}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="input-team-checkbox"
-                                               name="all-team" value="1">
-                                        <label class="custom-control-label" for="input-team-checkbox">Apply change to
-                                            all
-                                            team</label>
+            @auth
+                <div class="col-md-12">
+                    <!-- Scoreboard Admin -->
+                    <div id="scoreboard-change" class="card my-2">
+                        <h5 class="card-header"><i class="fas fa-wrench"></i> Increase/Decrease Score</h5>
+                        <div class="card-body">
+                            <form id="form-score-change" action="scoreboard/change" method="post">
+                                {{csrf_field()}}
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label for="input-team">Team</label>
+                                        <select id="input-team" name="team" class="custom-select form-control">
+                                            @foreach($teams->sortBy('score') as $team)
+                                                <option @if(old('team',-1) == $team->id)
+                                                        selected
+                                                        @endif
+                                                        value="{{$team->id}}">{{$team->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="custom-control custom-checkbox mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="input-team-checkbox"
+                                                   name="all-team" value="1">
+                                            <label class="custom-control-label" for="input-team-checkbox">Apply change
+                                                to
+                                                all
+                                                team</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="input-criterion">Which?</label>
+                                        <select id="input-criterion" name="criterion"
+                                                class="custom-select form-control">
+                                            <option value="">Unspecified</option>
+                                            @foreach($scoreboard['head'] as $subjectId => $subjectBag)
+                                                @foreach($subjectBag['criteria'] as $criterionId => $criterion)
+                                                    <option value="{{$criterionId}}">{{$subjectBag['subject']->name}}
+                                                        - {{$criterion->name}}</option>
+                                                @endforeach
+                                            @endforeach
+                                        </select>
+                                        <small id="criterionHelp" class="form-text text-muted">Select criterion
+                                        </small>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="input-score">Amount</label>
+                                        <input type="number" class="form-control form-control" name="score"
+                                               id="input-score"
+                                               placeholder="Score" value="{{old('score')}}">
+                                        <small id="scoreHelp" class="form-text text-muted">Enter negative value to
+                                            decrease
+                                            score
+                                        </small>
+                                    </div>
+                                    <div class="form-group form-inline col-md-3">
+                                        <button id="score-change-submit" type="submit" class="btn btn-primary">Submit
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="input-criterion">Which?</label>
-                                    <select id="input-criterion" name="criterion" class="custom-select form-control">
-                                        <option value="">Unspecified</option>
-                                        @foreach($scoreboard['head'] as $subjectId => $subjectBag)
-                                            @foreach($subjectBag['criteria'] as $criterionId => $criterion)
-                                                <option value="{{$criterionId}}">{{$subjectBag['subject']->name}}
-                                                    - {{$criterion->name}}</option>
-                                            @endforeach
-                                        @endforeach
-                                    </select>
-                                    <small id="criterionHelp" class="form-text text-muted">Select criterion
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="input-score">Amount</label>
-                                    <input type="number" class="form-control form-control" name="score"
-                                           id="input-score"
-                                           placeholder="Score" value="{{old('score')}}">
-                                    <small id="scoreHelp" class="form-text text-muted">Enter negative value to decrease
-                                        score
-                                    </small>
-                                </div>
-                                <div class="form-group form-inline col-md-3">
-                                    <button id="score-change-submit" type="submit" class="btn btn-primary">Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endauth
         </div>
     </div>
 @endsection

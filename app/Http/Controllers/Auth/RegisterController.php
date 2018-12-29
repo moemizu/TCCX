@@ -69,4 +69,21 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    /**
+     * Redirect to login form
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function showRegistrationForm()
+    {
+        return redirect('login');
+    }
+
+    /**
+     * Disable registration
+     */
+    public function register()
+    {
+
+    }
 }
