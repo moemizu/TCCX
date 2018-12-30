@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,11 +24,12 @@ class AppServiceProvider extends ServiceProvider
             return $paginator->appends(array_except(Input::query(), $paginator->getPageName()));
         });
         // Register permission
-        foreach (Permission::all() as $permission) {
-            Gate::define($permission->name, function (User $user) use ($permission) {
-                return $user->permissions()->where('name', $permission->name)->exists();
-            });
-        }
+        if (Schema::hasTable('permissions'))
+            foreach (Permission::all() as $permission) {
+                Gate::define($permission->name, function (User $user) use ($permission) {
+                    return $user->permissions()->where('name', $permission->name)->exists();
+                });
+            }
     }
 
     /**
