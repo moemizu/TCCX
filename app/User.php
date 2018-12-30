@@ -24,6 +24,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Permission[] $permissions
  */
 class User extends Authenticatable
 {
@@ -46,4 +47,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Permission');
+    }
+
+    public function addPermission($permissionName)
+    {
+        $this->permissions()->attach($this->getPermission($permissionName));
+    }
+
+    public function removePermission($permissionName)
+    {
+        $this->permissions()->detach($this->getPermission($permissionName));
+    }
+
+    private function getPermission($permissionName)
+    {
+        return Permission::where('name', $permissionName)->first();
+    }
 }

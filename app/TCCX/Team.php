@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\TCCX\Criterion[] $criteria
  * @property-read \App\TCCX\Quest\QuestTracking $tracking
+ * @property-read \App\TCCX\GateLand\GateLandMoney $money
  */
 class Team extends Model
 {

@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestType whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\TCCX\Criterion[] $criteria
  */
 class QuestType extends Model
 {

@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTracking whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestTracking whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\TCCX\Quest\QuestItem|null $item
  */
 class QuestTracking extends Model
 {

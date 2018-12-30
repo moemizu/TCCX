@@ -13,9 +13,11 @@
                     <div class="card-header">
                         <div class="row ml-1">
                             <h5><i class="fas fa-list-alt"></i> Quest List</h5>
-                            <a class="btn btn-primary btn-sm d-print-none ml-3" href="/quest/create" role="button">
-                                <i class="fas fa-plus"></i> Create
-                            </a>
+                            @if(Auth::user()->can('manage_quest'))
+                                <a class="btn btn-primary btn-sm d-print-none ml-3" href="/quest/create" role="button">
+                                    <i class="fas fa-plus"></i> Create
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -85,7 +87,9 @@
                                 <!--<th scope="col">Instruction</th>-->
                                 <th scope="col">Reward</th>
                                 <th class="text-nowrap" scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                @if(Auth::user()->can('manage_quest'))
+                                    <th scope="col">Action</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -124,34 +128,36 @@
                                             @endif
                                         @endif
                                     </td>
-                                    <td class="text-nowrap">
-                                        <a href="/quest/edit?id={{$quest->id}}&last_page={{request('page',1)}}"
-                                           class="btn btn-sm btn-primary" role="button" aria-disabled="true"><i
-                                                    class="fas fa-edit"></i> Edit</a>
-                                        <a href="" data-toggle="modal" data-target="#quest-delete-modal"
-                                           data-quest="{{$quest->id}}"
-                                           data-quest-code="{{$qc->generate($quest)}}"
-                                           class="btn btn-sm btn-danger" role="button"
-                                           aria-disabled="true"><i
-                                                    class="fas fa-trash"></i> Delete</a>
-                                        @if($quest->assignedTo())
-                                            @if(!$quest->isCompleted())
-                                                <a href="" data-toggle="modal" data-target="#quest-finish-modal"
-                                                   data-quest="{{$quest->id}}"
-                                                   data-quest-code="{{$qc->generate($quest)}}"
-                                                   class="btn btn-sm btn-success"
-                                                   role="button"
-                                                ><i class="fas fa-paper-plane"></i> Finish</a>
-                                            @endif
-                                        @else
-                                            <a href="" data-toggle="modal" data-target="#quest-assign-modal"
+                                    @if(Auth::user()->can('manage_quest'))
+                                        <td class="text-nowrap">
+                                            <a href="/quest/edit?id={{$quest->id}}&last_page={{request('page',1)}}"
+                                               class="btn btn-sm btn-primary" role="button" aria-disabled="true"><i
+                                                        class="fas fa-edit"></i> Edit</a>
+                                            <a href="" data-toggle="modal" data-target="#quest-delete-modal"
                                                data-quest="{{$quest->id}}"
                                                data-quest-code="{{$qc->generate($quest)}}"
-                                               data-quest-group="{{$quest->group}}"
-                                               class="btn btn-sm btn-info quest-assign" role="button"
-                                            ><i class="fas fa-file"></i> Assign</a>
-                                        @endif
-                                    </td>
+                                               class="btn btn-sm btn-danger" role="button"
+                                               aria-disabled="true"><i
+                                                        class="fas fa-trash"></i> Delete</a>
+                                            @if($quest->assignedTo())
+                                                @if(!$quest->isCompleted())
+                                                    <a href="" data-toggle="modal" data-target="#quest-finish-modal"
+                                                       data-quest="{{$quest->id}}"
+                                                       data-quest-code="{{$qc->generate($quest)}}"
+                                                       class="btn btn-sm btn-success"
+                                                       role="button"
+                                                    ><i class="fas fa-paper-plane"></i> Finish</a>
+                                                @endif
+                                            @else
+                                                <a href="" data-toggle="modal" data-target="#quest-assign-modal"
+                                                   data-quest="{{$quest->id}}"
+                                                   data-quest-code="{{$qc->generate($quest)}}"
+                                                   data-quest-group="{{$quest->group}}"
+                                                   class="btn btn-sm btn-info quest-assign" role="button"
+                                                ><i class="fas fa-file"></i> Assign</a>
+                                            @endif
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

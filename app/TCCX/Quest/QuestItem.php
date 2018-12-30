@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestItem whereUsage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\QuestItem whereUsed($value)
  * @mixin \Eloquent
+ * @property-read \App\TCCX\Quest\QuestTracking $tracking
  */
 class QuestItem extends Model
 {
