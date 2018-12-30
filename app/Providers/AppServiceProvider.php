@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Permission;
+use App\TCCX\ScoreData;
 use App\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Gate;
@@ -30,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
                     return $user->permissions()->where('name', $permission->name)->exists();
                 });
             }
+        // Score data
+        $this->app->singleton('TCCX\ScoreData', function () {
+            return new ScoreData();
+        });
     }
 
     /**
