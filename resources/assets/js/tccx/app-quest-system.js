@@ -7,7 +7,12 @@ export const QuestSystem = {
             if (dataMap != null && (typeof dataMap === 'object'))
                 for (let key in dataMap) {
                     let data = button.data(key);
-                    modal.find(dataMap[key]).val(data);
+                    let element = modal.find(dataMap[key]);
+                    if (element.prop('tagName') === 'INPUT') {
+                        element.val(data);
+                    } else {
+                        element.text(data);
+                    }
                 }
         });
     },
@@ -17,6 +22,29 @@ export const QuestSystem = {
             let modal = $(this);
             if (action instanceof Function) {
                 action(button, modal);
+            }
+        })
+    },
+    onAssignButtonClick: function () {
+        let button = $('.quest-assign');
+        button.click(function (e) {
+            let groupNo = e.currentTarget.dataset.questGroup;
+            let assisted = false;
+            $("#select-team > option").each(function () {
+                if (this.dataset.group === groupNo) {
+                    $(this).attr('selected', 'selected');
+                    assisted = true;
+                }
+            });
+            let info = $("#quest-assign-info");
+            if (assisted) {
+                info.text('Automatically selecting a team based on the quest group no.');
+                info.removeClass('text-info');
+                info.addClass('text-success');
+            } else {
+                info.text('Please select a team');
+                info.removeClass('text-success');
+                info.addClass('text-info');
             }
         })
     }

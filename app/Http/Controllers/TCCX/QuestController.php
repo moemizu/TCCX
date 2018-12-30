@@ -14,6 +14,7 @@ use App\TCCX\Team;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -60,8 +61,15 @@ class QuestController extends Controller
     public function index(Request $request)
     {
         $query = Quest::with('quest_type', 'quest_zone', 'quest_location');
-        if (!empty($request->get('name')))
-            $query->where('name', 'LIKE', '%' . $request->get('name') . '%');
+        if (!empty($request->get('name'))) {
+            $name = $request->get('name');
+            if (preg_match('/[AMX][RSX][MSLC]\d{5}/', $name, $output)) {
+                $questCode = $output[0];
+                $this->buildQuestQueryByCode($query, $questCode);
+            } else {
+                $query->where('name', 'LIKE', '%' . $request->get('name') . '%');
+            }
+        }
         if ($request->get('group') != null)
             $query->where('group', $request->get('group'));
         if (!empty($request->get('type')))
@@ -116,15 +124,8 @@ class QuestController extends Controller
      */
     public function getQuest($code)
     {
-        $qc = $this->app->make('App\TCCX\Quest\QuestCode');
-        $parsedQuestCode = $qc->parse($code);
-        $quest = Quest::where('order', $parsedQuestCode['order'])
-            ->where('quest_type_id', $parsedQuestCode['type'])
-            ->where('quest_zone_id', $parsedQuestCode['zone'])
-            ->where('time', $parsedQuestCode['time'])
-            ->where('group', $parsedQuestCode['group'])
-            ->where('difficulty', $parsedQuestCode['difficulty'])
-            ->firstOrFail();
+        $query = Quest::query();
+        $quest = $this->buildQuestQueryByCode($query, $code)->firstOrFail();
         return view('tccx.quest.view2', ['quests' => [$quest]]);
     }
 
@@ -341,5 +342,17 @@ class QuestController extends Controller
         } else {
             return !$quest->teams()->exists();
         }
+    }
+
+    private function buildQuestQueryByCode(Builder $query, $code)
+    {
+        $qc = $this->app->make('App\TCCX\Quest\QuestCode');
+        $parsedQuestCode = $qc->parse($code);
+        return $query->where('order', $parsedQuestCode['order'])
+            ->where('quest_type_id', $parsedQuestCode['type'])
+            ->where('quest_zone_id', $parsedQuestCode['zone'])
+            ->where('time', $parsedQuestCode['time'])
+            ->where('group', $parsedQuestCode['group'])
+            ->where('difficulty', $parsedQuestCode['difficulty']);
     }
 }

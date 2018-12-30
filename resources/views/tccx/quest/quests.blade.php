@@ -22,7 +22,7 @@
                         <form id="quest-filter" method="get" action="{{route('tccx.quest.quests')}}">
                             <div class="form-row">
                                 <div class="col-6 col-md-2 py-1">
-                                    <input type="text" name="name" class="form-control" placeholder="Name"
+                                    <input type="text" name="name" class="form-control" placeholder="Name or code"
                                            value="{{request('name')}}">
                                 </div>
                                 <div class="col-6 col-md-1 py-1">
@@ -67,7 +67,7 @@
                                            placeholder="Level"
                                            value="{{request('level')}}">
                                 </div>
-                                <div class="col-6 col-md-2 py-1">
+                                <div class="col-6 col-md-1 py-1">
                                     <button type="submit" class="btn btn-primary">Search</button>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                 <tr>
                                     <th scope="row">{{$quest->id}}</th>
                                     <td><a href="/quest/view/{{$qc->generate($quest)}}"
-                                           target="_blank">{{$quest->name}}</a></td>
+                                           target="_blank">{{$quest->name}} ({{$qc->generate($quest)}})</a></td>
                                     <td>{{optional($quest->quest_type)->code}}</td>
                                     <td>{{[0 => 'N/A',1 => 'M',2 => 'A'][$quest->getOriginal('time')] ?? ''}}</td>
                                     <td>{{$quest->group}}</td>
@@ -129,19 +129,26 @@
                                            class="btn btn-sm btn-primary" role="button" aria-disabled="true"><i
                                                     class="fas fa-edit"></i> Edit</a>
                                         <a href="" data-toggle="modal" data-target="#quest-delete-modal"
-                                           data-quest="{{$quest->id}}" class="btn btn-sm btn-danger" role="button"
+                                           data-quest="{{$quest->id}}"
+                                           data-quest-code="{{$qc->generate($quest)}}"
+                                           class="btn btn-sm btn-danger" role="button"
                                            aria-disabled="true"><i
                                                     class="fas fa-trash"></i> Delete</a>
                                         @if($quest->assignedTo())
                                             @if(!$quest->isCompleted())
                                                 <a href="" data-toggle="modal" data-target="#quest-finish-modal"
-                                                   data-quest="{{$quest->id}}" class="btn btn-sm btn-success"
+                                                   data-quest="{{$quest->id}}"
+                                                   data-quest-code="{{$qc->generate($quest)}}"
+                                                   class="btn btn-sm btn-success"
                                                    role="button"
                                                 ><i class="fas fa-paper-plane"></i> Finish</a>
                                             @endif
                                         @else
                                             <a href="" data-toggle="modal" data-target="#quest-assign-modal"
-                                               data-quest="{{$quest->id}}" class="btn btn-sm btn-info" role="button"
+                                               data-quest="{{$quest->id}}"
+                                               data-quest-code="{{$qc->generate($quest)}}"
+                                               data-quest-group="{{$quest->group}}"
+                                               class="btn btn-sm btn-info quest-assign" role="button"
                                             ><i class="fas fa-file"></i> Assign</a>
                                         @endif
                                     </td>
@@ -160,7 +167,8 @@
                             <div id="dialog-quest-delete" class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="quest-delete-message">Delete Quest?</h5>
+                                        <h5 class="modal-title" id="quest-delete-message">Delete Quest (<span
+                                                    id="input-quest-code"></span>)?</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -189,7 +197,9 @@
                             <div id="dialog-quest-assign" class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="quest-finish-message">Assign Quest</h5>
+                                        <h5 class="modal-title" id="quest-finish-message">Assign Quest
+                                            (<span id="input-quest-code"></span>)
+                                        </h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -200,10 +210,16 @@
                                             <input type="hidden" id="input-assign-quest" name="quest-id" value="">
                                             <select id="select-team" name="selected-team" class="form-control">
                                                 @foreach($teams as $team)
-                                                    <option value="{{$team->id}}">{{$team->name}}</option>
+                                                    <option data-group="{{$team->tracking->assigned_group ?? ''}}"
+                                                            value="{{$team->id}}">
+                                                        {{$team->name}}@if(optional($team->tracking)->assigned_group)
+                                                            (Group no.{{$team->tracking->assigned_group}})
+                                                        @endif
+                                                    </option>
                                                 @endforeach
                                             </select>
-                                            <label for="select-team" class="text-info">Please select a team</label>
+                                            <label id="quest-assign-info" for="select-team" class="text-info">Please
+                                                select a team</label>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -222,7 +238,8 @@
                             <div id="dialog-quest-finish" class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="quest-finish-message">Finish Quest</h5>
+                                        <h5 class="modal-title" id="quest-finish-message">Finish Quest (<span
+                                                    id="input-quest-code"></span>)</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>

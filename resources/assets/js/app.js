@@ -19,10 +19,20 @@ $(document).ready(function () {
     // mount quest location app
     PageUtil.mountVueApp('#quest-location-list', new QuestLocationApp());
     // initialize delete modal injection
-    QuestSystem.initializeModalInjection('#quest-delete-modal', {'quest': 'input#input-delete-quest'});
+    QuestSystem.initializeModalInjection('#quest-delete-modal', {
+        'quest': 'input#input-delete-quest',
+        'quest-code': '#input-quest-code'
+    });
     QuestSystem.initializeModalInjection('#quest-location-delete-modal', {'quest_loc': 'input#input-delete-quest-location'});
-    QuestSystem.initializeModalInjection('#quest-assign-modal', {'quest': 'input#input-assign-quest'});
-    QuestSystem.initializeModalInjection('#quest-finish-modal', {'quest': 'input#input-finish-quest'});
+    QuestSystem.initializeModalInjection('#quest-assign-modal', {
+        'quest': 'input#input-assign-quest',
+        'quest-code': '#input-quest-code'
+    });
+    QuestSystem.initializeModalInjection('#quest-finish-modal', {
+        'quest': 'input#input-finish-quest',
+        'quest-code': '#input-quest-code'
+    });
+    QuestSystem.onAssignButtonClick();
     // scoreboard
     Scoreboard.disableSelectWhenChecked('#input-team', '#input-team-checkbox');
 });

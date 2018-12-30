@@ -53,4 +53,9 @@ class Team extends Model
     {
         return $this->hasOne('App\TCCX\Quest\QuestTracking');
     }
+
+    public function money()
+    {
+        return $this->hasOne('App\TCCX\GateLand\GateLandMoney');
+    }
 }

@@ -107,7 +107,7 @@
                                         <label for="input-criterion">Which?</label>
                                         <select id="input-criterion" name="criterion"
                                                 class="custom-select form-control">
-                                            <option value="">Unspecified</option>
+                                            <option value="">General</option>
                                             @foreach($scoreboard['head'] as $subjectId => $subjectBag)
                                                 @foreach($subjectBag['criteria'] as $criterionId => $criterion)
                                                     <option value="{{$criterionId}}">{{$subjectBag['subject']->name}}
