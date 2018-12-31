@@ -73,10 +73,18 @@
 <!-- How to -->
     <div class="row mt-3 mb-5">
         <div class="col-12 quest-head-secondary quest-detail py-1">
-            Target
+            How to
         </div>
         <div class="col-12 quest-detail quest-sub-detail">
             {!! $pd->parse($quest->how_to) !!}
+        </div>
+    </div>
+    <div class="row mt-3 mb-5">
+        <div class="col-12 quest-head-secondary quest-detail py-1">
+            Target
+        </div>
+        <div class="col-12 quest-detail quest-sub-detail">
+            {!! $pd->parse($quest->target) !!}
         </div>
     </div>
     <!-- Criteria  -->
@@ -91,7 +99,7 @@
     <!-- Solution -->
     <div class="row mt-3 mb-5 d-print-none">
         <div class="col-12 quest-head-secondary quest-detail py-1">
-            Solution
+            Note
         </div>
         <div class="col-12 quest-detail quest-sub-detail">
             {!! $pd->parse($quest->meta) !!}

@@ -307,6 +307,7 @@ class QuestController extends Controller
         $quest->material = $request->get('material', '');
         $quest->story = $request->get('story', '');
         $quest->how_to = $request->get('how-to', '');
+        $quest->target = $request->get('target', '');
         $quest->criteria = $request->get('criteria', '');
         // Somehow, default value is not working (use ?? instead)
         $quest->meta = $request->get('editorial', '') ?? "";

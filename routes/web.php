@@ -34,7 +34,7 @@ Route::get('/quest/view/id/{id}', 'TCCX\QuestController@getQuestById')->name('tc
     ->where('id', '[0-9]+');
 Route::get('/quest/view-all', 'TCCX\QuestController@getAllQuest')->name('tccx.quest.view-all')->middleware('auth');
 
-Route::middleware(['auth', 'can:mange_quest'])->group(function () {
+Route::middleware(['auth', 'can:manage_quest'])->group(function () {
     // General
     // Create a new quest
     Route::get('/quest/create', 'TCCX\QuestController@createQuest')->name('tccx.quest.create');

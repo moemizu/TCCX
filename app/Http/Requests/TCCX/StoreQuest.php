@@ -41,6 +41,7 @@ class StoreQuest extends FormRequest
             'story' => 'present|string|nullable',
             'material' => 'present|string|nullable',
             'how-to' => 'required|string',
+            'target' => 'present|string|nullable',
             'criteria' => 'required|string',
             'editorial' => 'present|string|nullable',
             'last-page' => 'present|integer|nullable'

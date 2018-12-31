@@ -52,6 +52,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereTime($value)
  * @property string $material
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereMaterial($value)
+ * @property string|null $target
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\Quest\Quest whereTarget($value)
  */
 class Quest extends Model
 {

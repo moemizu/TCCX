@@ -154,6 +154,11 @@
               rows="3">{{old('how-to',$quest->how_to ?? '')}}</textarea>
 </div>
 <div class="form-group">
+    <label for="input-how-to">Target</label>
+    <textarea class="form-control" id="input-target" name="target"
+              rows="1">{{old('target',$quest->target ?? '')}}</textarea>
+</div>
+<div class="form-group">
     <label for="input-criteria">Criteria <span
                 class="text-warning">(Only staff can see this)</span></label>
     <textarea class="form-control" id="input-criteria" name="criteria"

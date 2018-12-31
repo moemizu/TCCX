@@ -69,10 +69,10 @@ class ImportQuest extends Command
             $quest->multiple_team = 0;
             // content
             $quest->story = $rawQuest[11];
-            $quest->how_to = $rawQuest[12];
+            $quest->how_to = $rawQuest[13];
+            $quest->target = $rawQuest[12];
             $quest->material = $rawQuest[10];
             $quest->criteria = $rawQuest[14];
-            $quest->meta = $rawQuest[13];
             // reward
             if ($rawQuest[3] == 'M')
                 $quest->reward = 200;
