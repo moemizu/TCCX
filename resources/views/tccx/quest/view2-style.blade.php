@@ -42,7 +42,8 @@
 
     #quest-view {
         -webkit-print-color-adjust: exact;
-        padding: 64px;
+        padding-left: 64px;
+        padding-right: 64px;
     }
 
 </style>

@@ -42,7 +42,7 @@
         </div>
     </div>
     <!-- Location -->
-    <div class="row mt-3 mb-5">
+    <div class="row mt-3 mb-1">
         <div class="col-md-2 col-sm-3 quest-head-secondary quest-detail">
             Location
         </div>
@@ -51,7 +51,7 @@
         </div>
     </div>
     <!-- Material -->
-    <div class="row mt-3 mb-5 d-print-none">
+    <div class="row mt-3 mb-5 @if(!$full) d-print-none @endif">
         <div class="col-md-2 col-sm-3 quest-head-secondary quest-detail">
             Material
         </div>
@@ -61,7 +61,7 @@
     </div>
     <!-- Background -->
     @if(!empty($quest->story))
-        <div class="row mt-3 mb-5">
+        <div class="row mt-3 mb-1">
             <div class="col-12 quest-head-secondary quest-detail py-1">
                 Background
             </div>
@@ -71,7 +71,7 @@
         </div>
 @endif
 <!-- How to -->
-    <div class="row mt-3 mb-5">
+    <div class="row mt-3 mb-1">
         <div class="col-12 quest-head-secondary quest-detail py-1">
             How to
         </div>
@@ -79,7 +79,7 @@
             {!! $pd->parse($quest->how_to) !!}
         </div>
     </div>
-    <div class="row mt-3 mb-5">
+    <div class="row mt-3 mb-1">
         <div class="col-12 quest-head-secondary quest-detail py-1">
             Target
         </div>
@@ -88,7 +88,7 @@
         </div>
     </div>
     <!-- Criteria  -->
-    <div class="row mt-3 mb-5 d-print-none">
+    <div class="row mt-3 mb-1 @if(!$full) d-print-none @endif">
         <div class="col-12 quest-head-secondary quest-detail py-1">
             Criteria
         </div>
@@ -96,8 +96,8 @@
             {!! $pd->parse($quest->criteria) !!}
         </div>
     </div>
-    <!-- Solution -->
-    <div class="row mt-3 mb-5 d-print-none">
+    <!-- Note -->
+    <div class="row mt-3 mb-1 d-print-none">
         <div class="col-12 quest-head-secondary quest-detail py-1">
             Note
         </div>

@@ -126,12 +126,14 @@ class QuestController extends Controller
     {
         $query = Quest::query();
         $quest = $this->buildQuestQueryByCode($query, $code)->firstOrFail();
-        return view('tccx.quest.view2', ['quests' => [$quest]]);
+        // HACK
+        return view('tccx.quest.view2', ['quests' => [$quest], 'full' => \request('full', 0)]);
     }
 
     public function getAllQuest()
     {
-        return view('tccx.quest.view2', ['quests' => Quest::all()]);
+        // HACK
+        return view('tccx.quest.view2', ['quests' => Quest::all(), 'full' => \request('full', 0)]);
     }
 
     /**

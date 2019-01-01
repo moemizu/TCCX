@@ -13,10 +13,13 @@
         <div class="row">
             <div class="col justify-content-end">
                 <button type="button" class="btn btn-primary" onclick="window.print()">Print</button>
+                @if($full) <span class="text-warning">  Warning: full edition</span>@endif
             </div>
         </div>
     </div>
-    @each('tccx.quest.view2-block', $quests, 'quest')
+    @foreach($quests as $quest)
+        @include('tccx.quest.view2-block', ['quest' => $quest])
+    @endforeach
 @endsection
 
 @push('styles')
