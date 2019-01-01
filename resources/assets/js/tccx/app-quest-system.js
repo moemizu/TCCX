@@ -34,6 +34,8 @@ export const QuestSystem = {
                 if (this.dataset.group === groupNo) {
                     $(this).attr('selected', 'selected');
                     assisted = true;
+                } else {
+                    $(this).removeAttr('selected');
                 }
             });
             let info = $("#quest-assign-info");
