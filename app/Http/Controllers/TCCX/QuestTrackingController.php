@@ -42,6 +42,27 @@ class QuestTrackingController extends Controller
 
     }
 
+    public function setItemStatus(Request $request)
+    {
+        $team = Team::whereId($request->get('team'))->firstOrFail();
+        if (!$team->tracking()->exists()) {
+            $team->tracking()->save(new QuestTracking());
+        }
+        if ($team->tracking->item()->exists()) {
+            $team->tracking->item->used = $request->get('used', 0);
+            $team->tracking->item->save();
+            return back()->with('status', [
+                'type' => 'success',
+                'message' => 'Status has been updated!'
+            ]);
+        } else {
+            return back()->with('status', [
+                'type' => 'danger',
+                'message' => 'This team doesn\'t have any item!'
+            ]);
+        }
+    }
+
     public function setGroup(Request $request)
     {
         $team = Team::whereId($request->get('team'))->firstOrFail();

@@ -203,7 +203,7 @@
                         <div class="card">
                             <h5 class="card-header"><i class="fas fa-wrench"></i> Set Item Status</h5>
                             <div class="card-body">
-                                <form id="form-toggle-item" method="post" action="/quest/tracking/set-item">
+                                <form id="form-toggle-item" method="post" action="/quest/tracking/set-item-status">
                                     {{csrf_field()}}
                                     <div class="form-group row">
                                         <label for="input-team" class="col-sm-4 col-form-label">Team</label>

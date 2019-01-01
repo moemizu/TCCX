@@ -58,6 +58,7 @@ Route::middleware(['auth', 'can:manage_quest'])->group(function () {
     // tracking
     Route::post('/quest/tracking/set-group', 'TCCX\QuestTrackingController@setGroup');
     Route::post('/quest/tracking/set-item', 'TCCX\QuestTrackingController@setItem');
+    Route::post('/quest/tracking/set-item-status', 'TCCX\QuestTrackingController@setItemStatus');
 });
 
 // GATE Land
