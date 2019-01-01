@@ -32,6 +32,18 @@ $(document).ready(function () {
         'quest': 'input#input-finish-quest',
         'quest-code': '#input-quest-code'
     });
+    // GATE Land
+    QuestSystem.initializeModalInjection('#set-score', {
+        'team': 'input#input-team', 'team-name': '#team-name', 'score': 'input#input-score'
+    });
+    QuestSystem.initializeModalInjection('#set-money', {
+        'team': 'input#input-team-money',
+        'team-name': '#team-name-money',
+        'money': 'input#input-money',
+        'subtract': 'input#input-subtract',
+        'text-money': '#text-money',
+    });
+
     QuestSystem.onAssignButtonClick();
     // scoreboard
     Scoreboard.disableSelectWhenChecked('#input-team', '#input-team-checkbox');

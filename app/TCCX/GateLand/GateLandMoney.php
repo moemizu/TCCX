@@ -18,8 +18,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\GateLand\GateLandMoney whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\GateLand\GateLandMoney whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\TCCX\Team|null $team
+ * @property int $score
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TCCX\GateLand\GateLandMoney whereScore($value)
  */
 class GateLandMoney extends Model
 {
     protected $fillable = ['money'];
+
+    public function team()
+    {
+        return $this->belongsTo('App\TCCX\Team');
+    }
 }
