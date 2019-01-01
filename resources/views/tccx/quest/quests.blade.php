@@ -42,7 +42,7 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="col=6 col-md-2 py-1">
+                                <div class="col-6 col-md-2 py-1">
                                     <select id="input-time" name="time" class="custom-select">
                                         <option value="">All times</option>
                                         @if(isset($times))
@@ -53,7 +53,7 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="col=6 col-md-2 py-1">
+                                <div class="col-6 col-md-2 py-1">
                                     <select id="input-zone" name="zone" class="custom-select">
                                         <option value="">All zones</option>
                                         @if(isset($zones))
