@@ -73,7 +73,7 @@
 <!-- How to -->
     <div class="row mt-3 mb-1">
         <div class="col-12 quest-head-secondary quest-detail py-1">
-            How to
+            Description
         </div>
         <div class="col-12 quest-detail quest-sub-detail">
             {!! $pd->parse($quest->how_to) !!}
