@@ -91,7 +91,7 @@
                                                     <option @if(old('team',-1) == $team->id)
                                                             selected
                                                             @endif
-                                                            value="{{$team->id}}">{{$team->name}}
+                                                            value="{{$team->id}}">{{$team->name}} ({{$team->id}})
                                                     </option>
                                                 @endforeach
                                             </select>
