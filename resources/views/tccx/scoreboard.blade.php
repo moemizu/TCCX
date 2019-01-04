@@ -18,7 +18,7 @@
                             <table class="mt-3 table table-hover table-sm table-bordered">
                                 <thead class="w-100">
                                 <tr>
-                                    <th class="align-middle" rowspan="2" scope="col">#</th>
+                                    <th class="align-middle" rowspan="2" scope="col">ID</th>
                                     <th rowspan="2" class="sorting align-middle" scope="col">
                                         <a href="{{ route('tccx.scoreboard',
                                     ['sort' => $sorting->inv('name')])}}">
@@ -54,7 +54,7 @@
                                 <tbody class="w-100">
                                 @foreach($scoreboard['teams'] as $team)
                                     <tr>
-                                        <th scope="row">{{$loop->iteration}}</th>
+                                        <th scope="row">{{$team->id}}</th>
                                         <td>{{$team->name}}</td>
                                         <td>{{$scoreboard['body'][$team->id]['sum']}}</td>
                                         <td>{{$team->score}}</td>
