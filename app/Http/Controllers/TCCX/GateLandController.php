@@ -38,6 +38,12 @@ class GateLandController extends Controller
         $team = $this->getTeamWithMoney($request->get('team'));
         $change = $request->get('money', 0);
         if ($request->get('subtract', 0)) $change *= -1;
+        if ($team->money->money + $change < 0) {
+            return back()->with('status', [
+                'type' => 'danger',
+                'message' => 'Not enough money!'
+            ]);
+        }
         $team->money->money += $change;
         $team->money->save();
         return back()
