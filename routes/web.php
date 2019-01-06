@@ -63,6 +63,7 @@ Route::middleware(['auth', 'can:manage_quest'])->group(function () {
 
 // GATE Land
 Route::get('/gate-land', 'TCCX\GateLandController@index')->name('tccx.gate_land');
+Route::get('/gate-land/money', 'TCCX\GateLandController@moneyIndex')->name('tccx.gate_land.money');
 Route::middleware(['auth'])->group(function () {
     // set score
     Route::post('/gate-land/set-score', 'TCCX\GateLandController@setScore')->middleware('can:manage_gate_land_score');

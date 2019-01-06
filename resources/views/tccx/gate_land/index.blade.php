@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <!-- Score -->
-                            <div class="row">
+                        <!--<div class="row">
                                 <div class="col-md-8 col-sm-8 col-6"><h4 class="card-title">Score: <span
                                                 class="text-info">{{$team->money->score}}</span></h4>
                                 </div>
@@ -52,10 +52,7 @@
                                         </button>
                                     @endif
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-muted">
-                            Last changed: {{optional(optional($team->money)->updated_at)->diffForHumans()}}
+                            </div>-->
                         </div>
                     </div>
                 </div>

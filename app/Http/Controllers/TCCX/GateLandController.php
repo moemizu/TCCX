@@ -15,6 +15,12 @@ class GateLandController extends Controller
         return view('tccx.gate_land.index', ['teams' => $teams]);
     }
 
+    public function moneyIndex()
+    {
+        $teams = Team::with('money')->get();
+        return view('tccx.gate_land.money', ['teams' => $teams]);
+    }
+
     public function setScore(Request $request)
     {
         $team = $this->getTeamWithMoney($request->get('team'));
