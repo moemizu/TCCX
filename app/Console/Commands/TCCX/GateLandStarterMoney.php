@@ -45,7 +45,7 @@ class GateLandStarterMoney extends Command
         foreach ($data['teams'] as $team) {
             if (!$team->money()->exists())
                 $team->money()->save(new GateLandMoney());
-            $team->money->money = $data['body'][$team->id]['sum'] / 100 ?? 0;
+            $team->money->money = $data['body'][$team->id]['sum'] / 20 ?? 0;
             $team->money->save();
         }
         $this->info('Starting money has been set for all team!');
